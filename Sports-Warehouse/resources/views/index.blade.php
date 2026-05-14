@@ -6,7 +6,6 @@
 
 
             <!-- Main Content -->
-            <main class="main-section">
                 <!-- Logo and search products section -->
                 <section class="logo-and-search">
                     <h1 class="logo-and-search__logo" aria-label="SW Sports Warehouse">
@@ -55,22 +54,7 @@
                     </ul> 
                 </div>
 
-                <!-- Hero / Banner -->
-                <div class="hero-banner">
-                    <img src="images/Bannerimage.svg" alt="Banner for Sports warehouse">
-                    <div class="hero-banner__dots">
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                    </div>
-                    <div class="hero-banner__promo">
-                        <div class="hero-banner__text">
-                            <p>View our brand<br>new range of</p>
-                            <h2>Sports<br>balls</h2>
-                            <a href="#" class="button">Shop now</a>
-                        </div>
-                    </div>
-                </div>
+            @include('partials.hero')
 
 
     <!-- Featured Products -->
@@ -134,7 +118,5 @@
                     </div>
                 </div>
             </section>
-
-        </main>
 
 @endsection
