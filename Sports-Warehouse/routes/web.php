@@ -46,3 +46,7 @@ Route::get('/', [EventController::class, 'index']);
 //     ];
 //     return view('index', ["items" => $items]);
 // });
+
+
+// get /produst/3
+Route::get('/product/{id}', [EventController::class, 'show']);
