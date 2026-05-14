@@ -86,7 +86,7 @@
                 </div>
             </section>
             <div class="footer-copyright">
-                <p>&copy; Copyright 222 Sports Warehouse.</p>
+                <p>&copy; Copyright <?= date('Y'); ?> Sports Warehouse.</p>
                 <p>All rights reserved. </p>
                 <p>Website made by Awesomesauce Design and Thomas Scollay</p>
             </div>
