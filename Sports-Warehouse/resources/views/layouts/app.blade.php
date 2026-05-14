@@ -32,7 +32,7 @@
             </header>
 
         {{-- add content here for all pages --}}
-        <main>
+        <main class="main-section">
             @yield('content')
         </main>
 
