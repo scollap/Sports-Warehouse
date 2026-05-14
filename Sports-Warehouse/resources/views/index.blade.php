@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Home')
+@section('title', 'Home - Sports Warehouse')
 
 @section('content')
 
@@ -62,40 +62,23 @@
             <h2 class="orange-bar">Featured products</h2>
         </div>
         <div class="featured-products">
-            <article>
-                <img src="images/product/soccerBall.jpg" alt="Top Scorer Ball">
-                <div>
-                    <p class="price orange">$34.95</p>
-                    <p class="discount">was <del>$46.00</del></p>
-                </div>
-                <h3>adidas Euro16 Top Soccer Ball</h3>
-            </article>
-            <article>
-                <img src="images/product/skateHelmet.jpg" alt="Player Classic Skate Helmet">
-                <p class="price">$70.00</p>
-                <h3>Pro-tec Classic Skate Helmet</h3>
-            </article>
-            <article>
-                <img src="images/product/waterBottle.jpg" alt="Water Bottle">
-                <div>
-                    <p class="price orange">$15.00</p>
-                    <p class="discount">was <del>$17.50</del></p>
-                </div>
-                <h3>Nike Sport 600ml Water Bottle</h3>
-            </article>
-            <article>
-                <img src="images/product/boxingGloves.jpg" alt="Amprotex Boxing Gloves">             
-                <p class="price">$79.95</p>
-                <h3>Sting ArmaPlus Boxing Gloves</h3>
-            </article>
-            <article>
-                <img src="images/product/footyBoots.jpg" alt="Footy Boots">
-                <div>
-                    <p class="price orange">$15.00</p>
-                    <p class="discount">was <del>$17.50</del></p>
-                </div>
-                <h3>Asics Gel Lethal Tigreor 8 IT Mens's</h3>
-            </article>
+        @if (empty($items))
+            <p>No featured products available.</p>
+        @else
+                @foreach ($items as $item)
+
+                    <article>
+                        <img src="{{ $item['image'] }}" alt="{{ $item['alt'] }}">
+                        <div>
+                            <p class="price orange">{{ $item['Price'] }}</p>
+                            @if ($item['discount'])
+                                <p class="discount">was <del>{{ $item['discount'] }}</del></p>
+                            @endif
+                        </div>
+                        <h3>{{ $item['description'] }}</h3>
+                    </article>
+            @endforeach
+        @endif
         </div>
 
             <!-- Brands -->
