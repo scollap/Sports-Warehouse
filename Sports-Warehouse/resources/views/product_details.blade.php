@@ -41,8 +41,9 @@
             <h2 class="orange-bar">Featured products</h2>
         </div>
         <div class="featured-products">
-        @if (empty($item))
-            <p>No featured products available.</p>
+
+        @if (!$item) 
+            <p>No product found.</p>
         @else
 
                     <article>

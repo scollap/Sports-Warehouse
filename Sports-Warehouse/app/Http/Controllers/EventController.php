@@ -69,13 +69,18 @@ class EventController extends Controller
 
     public function show($id)
     {
-        if (!isset($this->items[$id])) {
-            abort(404);
-        }
+
+        $item = $this->items[$id] ?? null;
 
         return view('product_details', [
-            'item' => $this->items[$id],
+            'item' => $item,
             'categories' => $this->categories,
         ]);
     }
 }
+
+
+//cd .\Sports-Warehouse
+//npm run build
+//npm run dev
+//php artisan serve
