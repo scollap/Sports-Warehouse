@@ -21,38 +21,17 @@
                 </section>
 
                 <!-- Category Links -->
-                <div class="categories">
-                    <ul>
-                        <li><a href="#">
-                                Shoes<i class="fa-solid fa-chevron-right"></i>
-                            </a>
-                        </li>
-                        <li><a href="#">
-                                Helmets<i class="fa-solid fa-chevron-right"></i>
-                            </a>
-                        </li>
-                        <li><a href="#">
-                                Pants<i class="fa-solid fa-chevron-right"></i>
-                            </a>
-                        </li>
-                        <li><a href="#">
-                                Tops<i class="fa-solid fa-chevron-right"></i>
-                            </a>
-                        </li>
-                        <li><a href="#">
-                                Balls<i class="fa-solid fa-chevron-right"></i>
-                            </a>
-                        </li>
-                        <li><a href="#">
-                                Equipment<i class="fa-solid fa-chevron-right"></i>
-                            </a>
-                        </li>
-                        <li><a href="#">
-                                Training gear<i class="fa-solid fa-chevron-right"></i>
-                            </a>
-                        </li>
-                    </ul> 
-                </div>
+                @if (empty($categories))
+                    <p>No categories available.</p>
+                @else
+                    <div class="categories">
+                        <ul>
+                            @foreach ($categories as $id => $name)
+                                <li><a href="/categories/{{ $id }}">{{ $name }}<i class="fa-solid fa-chevron-right"></i></a></li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
             @include('partials.hero')
 
@@ -69,7 +48,7 @@
                     <article>
                         <img src="{{ asset($item['image']) }}" alt="{{ $item['alt'] }}">
                         <div>
-                            <p class="price orange">{{ $item['Price'] }}</p>
+                            <p class="price orange">{{ $item['price'] }}</p>
                             @if ($item['discount'])
                                 <p class="discount">was <del>{{ $item['discount'] }}</del></p>
                             @endif

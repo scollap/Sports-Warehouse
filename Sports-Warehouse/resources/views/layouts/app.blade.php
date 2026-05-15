@@ -51,16 +51,17 @@
                     </ul>
                 </div>
                 <div class="footer-categories">
-                <h3>Product categories</h3>
+                {{-- Add section to display all categories in footer --}}
+                @if (empty($categories))
+                    <p>No categories available.</p>
+                @else
                     <ul>
-                        <li><a href="#">Shoes</a></li>
-                        <li><a href="#">Helmets</a></li>
-                        <li><a href="#">Tops</a></li>
-                        <li><a href="#">Balls</a></li>
-                        <li><a href="#">Equipment</a></li>
-                        <li><a href="#">Training Gear</a></li>
+                        @foreach ($categories as $id => $name)
+                            <li><a href="/categories/{{ $id }}">{{ $name }}</a></li>
+                        @endforeach
                     </ul>
-                </div>
+                @endif
+                </div> 
 
                 <div class="footer-socials">
                     <h3>Contact Sports Warehouse</h3>

@@ -20,39 +20,18 @@
                     </form>
                 </section>
 
-                <!-- Category Links -->
-                <div class="categories">
-                    <ul>
-                        <li><a href="#">
-                                Shoes<i class="fa-solid fa-chevron-right"></i>
-                            </a>
-                        </li>
-                        <li><a href="#">
-                                Helmets<i class="fa-solid fa-chevron-right"></i>
-                            </a>
-                        </li>
-                        <li><a href="#">
-                                Pants<i class="fa-solid fa-chevron-right"></i>
-                            </a>
-                        </li>
-                        <li><a href="#">
-                                Tops<i class="fa-solid fa-chevron-right"></i>
-                            </a>
-                        </li>
-                        <li><a href="#">
-                                Balls<i class="fa-solid fa-chevron-right"></i>
-                            </a>
-                        </li>
-                        <li><a href="#">
-                                Equipment<i class="fa-solid fa-chevron-right"></i>
-                            </a>
-                        </li>
-                        <li><a href="#">
-                                Training gear<i class="fa-solid fa-chevron-right"></i>
-                            </a>
-                        </li>
-                    </ul> 
-                </div>
+                {{-- Add section to display all categories --}} 
+                @if (empty($categories))
+                    <p>No categories available.</p>
+                @else
+                    <div class="categories">
+                        <ul>
+                            @foreach ($categories as $id => $name)
+                                <li><a href="/categories/{{ $id }}">{{ $name }}<i class="fa-solid fa-chevron-right"></i></a></li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
             @include('partials.hero')
 
@@ -62,24 +41,24 @@
             <h2 class="orange-bar">Featured products</h2>
         </div>
         <div class="featured-products">
+
         @if (empty($items))
             <p>No featured products available.</p>
         @else
                 @foreach ($items as $item)
 
-                    <article>
-                        <img src="{{ $item['image'] }}" alt="{{ $item['alt'] }}">
-                        <div>
-                            <p class="price orange">{{ $item['Price'] }}</p>
-                            @if ($item['discount'])
-                                <p class="discount">was <del>{{ $item['discount'] }}</del></p>
-                            @endif
-                        </div>
-                        <h3>{{ $item['description'] }}</h3>
-                    </article>
-            @endforeach
-        @endif
-        </div>
+                            <article>
+                                <img src="{{ $item['image'] }}" alt="{{ $item['alt'] }}">
+                                <div>
+                                    <p class="price orange">{{ $item['price'] }}</p>
+                                    @if ($item['discount'])
+                                        <p class="discount">was <del>{{ $item['discount'] }}</del></p>
+                                    @endif
+                                </div>
+                                <h3>{{ $item['description'] }}</h3>
+                            </article>
+                    @endforeach
+                @endif
 
             <!-- Brands -->
              <section>
