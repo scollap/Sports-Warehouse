@@ -9,7 +9,7 @@
                 <!-- Logo and search products section -->
                 <section class="logo-and-search">
                     <h1 class="logo-and-search__logo" aria-label="SW Sports Warehouse">
-                        <img src="images/sports-warehouse-logo.svg" alt="Sports Warehouse Logo">
+                        <img src="{{ asset('images/sports-warehouse-logo.svg') }}" alt="Sports Warehouse Logo">
                     </h1>
                     <form class="product-search" role="search" aria-label="Product Search" action="/search" method="GET">
                         <label for="search-input" class="visually-hidden">Search products</label>
@@ -68,12 +68,12 @@
                     </div>
                     <div class="brands_logo">
                         <ul>
-                            <li><img src="images/logo/logo_nike.png" alt="Nike"></li>
-                            <li><img src="images/logo/logo_adidas.png" alt="Adidas"></li>
-                            <li><img src="images/logo/logo_skins.png" alt="Skins"></li>
-                            <li><img src="images/logo/logo_asics.png" alt="Asics"></li>
-                            <li><img src="images/logo/logo_newbalance.png" alt="New Balance"></li>
-                            <li><img src="images/logo/logo_wilson.png" alt="Wilson"></li>
+                            <li><img src="{{ asset('images/logo/logo_nike.png') }}" alt="Nike"></li>
+                            <li><img src="{{ asset('images/logo/logo_adidas.png') }}" alt="Adidas"></li>
+                            <li><img src="{{ asset('images/logo/logo_skins.png') }}" alt="Skins"></li>
+                            <li><img src="{{ asset('images/logo/logo_asics.png') }}" alt="Asics"></li>
+                            <li><img src="{{ asset('images/logo/logo_newbalance.png') }}" alt="New Balance"></li>
+                            <li><img src="{{ asset('images/logo/logo_wilson.png') }}" alt="Wilson"></li>
                         </ul>
                     </div>
                 </div>
