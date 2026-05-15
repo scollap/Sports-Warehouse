@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
+    //temp variables for data
+    //will change to access from database
     private $categories = [
         1 => 'Shoes',
         2 => 'Helmets',
@@ -59,16 +61,15 @@ class EventController extends Controller
 
     ];
 
-    public function index()
-    {
+    //functions to handle the routes
+    public function index(){
         return view('index', [
             'items' => $this->items,
             'categories' => $this->categories,
         ]);
     }
 
-    public function show($id)
-    {
+    public function show($id){
 
         $item = $this->items[$id] ?? null;
 
@@ -79,7 +80,7 @@ class EventController extends Controller
     }
 }
 
-
+//Just handy things to rememeber when doing dev work
 //cd .\Sports-Warehouse
 //npm run build
 //npm run dev
