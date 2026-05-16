@@ -13,6 +13,25 @@
   overflow: hidden;
 }
 
+.confirmationDiv{
+      color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.confirmationDiv h2 {
+  font-size: 2em;
+  margin-top: 0;
+  border-bottom: 1px solid #00aced;
+}
+
+.confirmationDiv p {
+  font-size: 1.1em;
+  margin-top: 1em;
+}
+
 /* overwrite some css to make just this page look better */
 .main-section {
   background-color: rgb(219 219 219 / 50%);
