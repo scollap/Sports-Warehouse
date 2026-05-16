@@ -21,9 +21,9 @@
                             </a>
                         </li>
                         <li class="menu-text"><a href="#" id="toggleTxt">Menu</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#"><i class="fa-regular fa-circle"></i> Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/"><i class="fa-regular fa-circle"></i> Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="#"><i class="fa-regular fa-circle"></i> About SW</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#"><i class="fa-regular fa-circle"></i> Contact Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('register.index') }}"><i class="fa-regular fa-circle"></i> Contact Us</a></li>
                         <li class="nav-item"><a class="nav-link" href="#"><i class="fa-regular fa-circle"></i> View Products</a></li>
                         <li class="nav-item login-item"><a class="nav-link" href="#"><i class="fas fa-lock"></i> Login</a></li>
                         <li class="cart-item"><a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i> View Cart</a></li>

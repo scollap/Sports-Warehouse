@@ -1,0 +1,134 @@
+/* Global */
+* {
+  box-sizing: border-box;
+}
+
+
+
+/* Main Content */
+.mainRegDiv {
+  position: relative;
+  display: flex;
+  padding: 30px;
+  overflow: hidden;
+}
+
+/* overwrite some css to make just this page look better */
+.main-section {
+  background-color: rgb(219 219 219 / 50%);
+}
+
+.logo-and-search { 
+  background-color: white;
+}
+
+/* Coming Soon Section */
+.soonDiv {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 8px;
+  margin-right: 10px;
+  max-width: 450px;
+}
+
+.soonDiv h2 {
+  font-size: 2em;
+  margin-top: 0;
+  border-bottom: 1px solid #00aced;
+}
+
+.soonDiv p {
+  font-size: 1.1em;
+  margin-top: 1em;
+}
+
+/* Form */
+form fieldset {
+  border: 1px solid #999;
+  border-radius: 5px;
+  padding: 1em;
+}
+
+.form-input {
+    border: 1px solid #333;
+    padding: 8px;
+    border-radius: 4px;
+      width: 100%;
+}
+
+.form-row {
+  margin-bottom: 10px;
+}
+
+.mainDiv-right input,
+.mainDiv-right select,
+.mainDiv-right textarea {
+  width: 100%;
+}
+
+textarea {
+  display: block;
+  min-height: 120px;
+  max-width: 100%;
+}
+
+button {
+  display: inline-block;
+  padding: 0.4em 0.8em;
+  border: none;
+  border-radius: 5px;
+  background-color: #00aced;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #034d68;
+}
+
+/* Messages */
+.error-summary {
+  margin: 1em 0;
+  padding: 0.5em;
+  border: 1px solid #8f080874;
+  border-radius: 5px;
+  color: #8f0808;
+  background-color: #8f080827;
+  font-style: italic;
+}
+
+.error-message {
+  color: #8f0808;
+  font-style: italic;
+}
+
+.success-message {
+  color: #088f08;
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .mainRegDiv {
+    flex-direction: column;
+  }
+
+  .site-wrapper {
+    margin: 0;
+  }
+
+  .soonDiv {
+    margin-right: 0;
+    min-width: 200px;
+  }
+
+  .formDiv {
+    margin-right: 0;
+    min-width: 200px;
+  }
+
+  .mainDiv-right {
+    min-width: 200px;
+  }
+}
