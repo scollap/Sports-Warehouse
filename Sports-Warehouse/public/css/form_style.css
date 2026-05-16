@@ -11,6 +11,8 @@
   display: flex;
   padding: 30px;
   overflow: hidden;
+  background-image: url("../images/backgroundImg.png");
+  background-size: cover;
 }
 
 .confirmationDiv{
@@ -35,10 +37,18 @@
 /* overwrite some css to make just this page look better */
 .main-section {
   background-color: rgb(219 219 219 / 50%);
+  padding-bottom: 0px;
 }
 
 .logo-and-search { 
   background-color: white;
+}
+
+
+.formDiv {
+  background-color: white;
+  padding: 8px;
+  border-radius: 8px;
 }
 
 .formDiv h2 {
@@ -149,6 +159,7 @@ button:hover {
     margin-right: 0;
     min-width: 200px;
     max-width: 450px;
+    margin-top: 1em
   }
 
   .mainDiv-right {

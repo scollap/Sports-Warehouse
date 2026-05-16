@@ -41,9 +41,8 @@ class QuestionController extends Controller
             'comments'  => 'nullable',
         ]);
 
-        // send email
-            try {
-
+    //send email using resend
+    try {
 
         $resend = Resend::client(env('RESEND_API_KEY'),);
 
@@ -54,27 +53,22 @@ class QuestionController extends Controller
 
             'html' => "
                 <h1>New Registration</h1>
-
                 <p>
                     <strong>Name:</strong>
                     {$validated['firstName']}
                     {$validated['lastName']}
                 </p>
-
                 <p>
                     <strong>Email:</strong>
                     {$validated['email']}
                 </p>
-
                 <p>
                     <strong>Phone:</strong>
                     {$validated['phone']}
                 </p>
-
                 <p>
                     <strong>Comments:</strong>
                 </p>
-
                 <p>
                     {$validated['comments']}
                 </p>
@@ -83,15 +77,18 @@ class QuestionController extends Controller
 
     } catch (\Exception $e) {
 
-        dd($e->getMessage()); //just to debug and see the error
+        // dd($e->getMessage()); //just to debug and see the error
 
-        // return back()
-        //     ->withErrors([
-        //         'email' => 'Unable to send email right now.'
-        //     ])
-        //     ->withInput();
+        return back()
+            ->withErrors([
+                'email' => 'Unable to send email right now.'
+            ])
+            ->withInput();
     }
 
-        return view('registerConfirmation', $validated);
+        return view('registerConfirmation', array_merge(
+            $validated,
+            ['categories' => $this->categories]
+        ));
     }
 }
