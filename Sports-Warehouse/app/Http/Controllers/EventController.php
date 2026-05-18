@@ -69,9 +69,17 @@ class EventController extends Controller
         ]);
     }
 
+
     public function show($id){
 
         $item = $this->items[$id] ?? null;
+
+
+        // use the below if I want to use the 404.blade.php page 
+        // if (!$item) {
+        //     abort(404);
+        // }
+
 
         return view('product_details', [
             'item' => $item,

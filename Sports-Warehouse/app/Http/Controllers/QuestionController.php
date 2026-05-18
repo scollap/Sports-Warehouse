@@ -41,7 +41,7 @@ class QuestionController extends Controller
             'comments'  => 'nullable',
         ]);
 
-    //send email using resend
+    //send email
     try {
 
         $resend = Resend::client(env('RESEND_API_KEY'),);
