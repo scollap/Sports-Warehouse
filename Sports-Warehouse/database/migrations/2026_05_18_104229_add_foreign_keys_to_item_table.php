@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('category', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('item', function (Blueprint $table) {
+            $table->foreign(['categoryId'], 'FK_itemCategory')->references(['categoryId'])->on('category')->onUpdate('restrict')->onDelete('restrict');
         });
     }
 
@@ -22,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('category');
+        Schema::table('item', function (Blueprint $table) {
+            $table->dropForeign('FK_itemCategory');
+        });
     }
 };
