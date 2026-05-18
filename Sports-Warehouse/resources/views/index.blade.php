@@ -21,23 +21,26 @@
         </div>
         <div class="featured-products">
 
-        @if (empty($items))
-            <p>No featured products available.</p>
-        @else
-                @foreach ($items as $item)
-
-                            <article>
-                                <img src="{{ $item['image'] }}" alt="{{ $item['alt'] }}">
-                                <div>
-                                    <p class="price orange">{{ $item['price'] }}</p>
-                                    @if ($item['discount'])
-                                        <p class="discount">was <del>{{ $item['discount'] }}</del></p>
-                                    @endif
-                                </div>
-                                <h3>{{ $item['description'] }}</h3>
-                            </article>
-                    @endforeach
+@if($items->isEmpty())
+    <p>No products found.</p>
+@else
+    @foreach($items as $item)
+        <article>
+            <img src="{{ asset('images/product/' . $item->photo) }}" alt="{{ $item->itemName }}">
+            <div>
+                <p class="price orange">
+                    ${{ number_format($item->price, 2) }}
+                </p>
+                @if($item->salePrice)
+                    <p class="discount">
+                        was <del>${{ number_format($item->salePrice, 2) }}</del>
+                    </p>
                 @endif
+            </div>
+            <h3>{{ \Illuminate\Support\Str::limit($item->description, 50, '...') }}</h3>
+        </article>
+    @endforeach
+@endif
 
             <!-- Brands -->
         @include('partials.brands')

@@ -21,22 +21,26 @@
             <h2 class="orange-bar">Featured products</h2>
         </div>
         <div class="featured-products">
-
-        @if (!$item) 
-            <p>No product found.</p>
-        @else
-
-                    <article>
-                        <img src="{{ asset($item['image']) }}" alt="{{ $item['alt'] }}">
-                        <div>
-                            <p class="price orange">{{ $item['price'] }}</p>
-                            @if ($item['discount'])
-                                <p class="discount">was <del>{{ $item['discount'] }}</del></p>
-                            @endif
-                        </div>
-                        <h3>{{ $item['description'] }}</h3>
-                    </article>
-        @endif
+@if($items->isEmpty())
+    <p>No products found.</p>
+@else
+    @foreach($items as $item)
+        <article>
+            <img src="{{ asset('images/product/' . $item->photo) }}" alt="{{ $item->itemName }}">
+            <div>
+                <p class="price orange">
+                    ${{ number_format($item->price, 2) }}
+                </p>
+                @if($item->salePrice)
+                    <p class="discount">
+                        was <del>${{ number_format($item->salePrice, 2) }}</del>
+                    </p>
+                @endif
+            </div>
+            <h3>{{ $item->description }}</h3>
+        </article>
+    @endforeach
+@endif
         </div>
 
             <!-- Brands -->

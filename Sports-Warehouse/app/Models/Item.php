@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Item extends Model
+{
+    //
+    protected $table = 'item';
+
+    protected $primaryKey = 'itemId';
+
+    public $timestamps = false;
+    
+    protected $fillable = [
+        'itemName',
+        'photo',
+        'price',
+        'salePrice',
+        'description',
+        'featured',
+        'categoryId',
+    ];
+}
