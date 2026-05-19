@@ -20,28 +20,35 @@ class EventController extends Controller
         return Item::all();
     }
 
+    public function featured()
+    {
+        return Item::where('featured', 1)->get();
+    }
+
 
     //functions to handle the routes
     public function index(){
+        $category = "Featured Products";
         return view('index', [
-            'items' => $this->getItems(),
+            'items' => $this->featured(),
+            'category' => $category,
             'categories' => $this->getCategories(),
         ]);
     }
 
 
     public function show($id){
-
-        $item = Item::find($id);      
-
+  
+        $items = Item::where('categoryId', $id)->get();
+        $category = Category::find($id);
         // use the below if I want to use the 404.blade.php page 
         // if (!$item) {
         //     abort(404);
         // }
-
-
+        
         return view('product_details', [
-            'item' => $item,
+            'items' => $items,
+            'category' => $category,
             'categories' => $this->getCategories(),
         ]);
     }

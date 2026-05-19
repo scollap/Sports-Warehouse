@@ -57,7 +57,7 @@
                 @else
                     <ul>
                         @foreach ($categories as $id => $name)
-                            <li><a href="/categories/{{ $id }}">{{ $name }}</a></li>
+                            <li><a href="/product/{{ $id }}">{{ $name }}</a></li>
                         @endforeach
                     </ul>
                 @endif

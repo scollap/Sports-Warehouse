@@ -8,4 +8,8 @@ class Category extends Model
 {
     //
     protected $table = 'category';
+
+    protected $primaryKey = 'categoryId';
+
+    public $timestamps = false;
 }

@@ -27,6 +27,7 @@ class QuestionController extends Controller
     ]);
     }
 
+    
 
     public function submit(Request $request)
     {

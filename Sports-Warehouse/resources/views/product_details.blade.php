@@ -18,7 +18,7 @@
 
     <!-- Featured Products -->
         <div class="white-background">
-            <h2 class="orange-bar">Featured products</h2>
+            <h2 class="orange-bar">{{ $category ? $category->categoryName : 'No Category'  }}</h2>
         </div>
         <div class="featured-products">
 @if($items->isEmpty())
@@ -37,7 +37,7 @@
                     </p>
                 @endif
             </div>
-            <h3>{{ $item->description }}</h3>
+            <h3>{{ \Illuminate\Support\Str::limit($item->description, 50, '...') }}</h3>
         </article>
     @endforeach
 @endif

@@ -5,7 +5,7 @@
     <div class="categories">
         <ul>
             @foreach ($categories as $id => $name)
-                <li><a href="/categories/{{ $id }}">{{ $name }}<i class="fa-solid fa-chevron-right"></i></a></li>
+                <li><a href="/product/{{ $id }}">{{ $name }}<i class="fa-solid fa-chevron-right"></i></a></li>
             @endforeach
         </ul>
     </div>
