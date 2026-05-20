@@ -6,21 +6,20 @@
 
 
             <!-- Main Content -->
-            <!-- Logo and search products section -->
+
+                <!-- Logo and search products section -->
             @include('partials.logo_search')
 
-            {{-- Add section to display all categories --}} 
+                {{-- Add section to display all categories --}} 
             @include('partials.categories')
 
-            @include('partials.hero')
 
 
     <!-- Featured Products -->
         <div class="white-background">
-            <h2 class="orange-bar">Featured products</h2>
+            <h2 class="orange-bar">{{ $category ? $category->categoryName : 'No Category'  }}</h2>
         </div>
         <div class="featured-products">
-
 @if($items->isEmpty())
     <p>No products found.</p>
 @else
@@ -41,7 +40,7 @@
         </article>
     @endforeach
 @endif
-</div>
+        </div>
 <div class="flex justify-center mt-8">
     {{ $items->links() }}
 </div>

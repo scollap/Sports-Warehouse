@@ -7,8 +7,9 @@ Route::get('/', [EventController::class, 'index']);
 
 
 
-Route::get('/product/{id}', [EventController::class, 'show']);
+Route::get('/category/{id}', [EventController::class, 'show']);
 
+Route::get('/search', [EventController::class, 'search']);
 
 use App\Http\Controllers\QuestionController;
 
@@ -17,3 +18,4 @@ Route::get('/question', [QuestionController::class, 'index'])
 
 Route::post('/question', [QuestionController::class, 'submit'])
     ->name('register.submit');
+

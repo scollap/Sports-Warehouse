@@ -43,9 +43,9 @@
                 <div class="footer-nav">
                     <h3>Site navigation</h3>
                     <ul>
-                        <li><a href="#">Home</a></li>
+                        <li><a href="/">Home</a></li>
                         <li><a href="#">About SW</a></li>
-                        <li><a href="#">Contact US</a></li>
+                        <li><a href="{{ route('register.index') }}">Contact US</a></li>
                         <li><a href="#">View products</a></li>
                         <li><a href="#">Privacy policy</a></li>
                     </ul>
@@ -57,7 +57,7 @@
                 @else
                     <ul>
                         @foreach ($categories as $id => $name)
-                            <li><a href="/product/{{ $id }}">{{ $name }}</a></li>
+                            <li><a href="/category/{{ $id }}">{{ $name }}</a></li>
                         @endforeach
                     </ul>
                 @endif

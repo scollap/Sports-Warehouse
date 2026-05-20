@@ -13,7 +13,6 @@
                 {{-- Add section to display all categories --}} 
             @include('partials.categories')
 
-            @include('partials.hero')
 
 
     <!-- Featured Products -->
@@ -37,7 +36,7 @@
                     </p>
                 @endif
             </div>
-            <h3>{{ \Illuminate\Support\Str::limit($item->description, 50, '...') }}</h3>
+            <h3>{{ \Illuminate\Support\Str::limit($item->itemName, 50, '...') }}</h3>
         </article>
     @endforeach
 @endif

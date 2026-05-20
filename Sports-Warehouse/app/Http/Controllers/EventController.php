@@ -22,7 +22,7 @@ class EventController extends Controller
 
     public function featured()
     {
-        return Item::where('featured', 1)->get();
+        return Item::where('featured', 1)->paginate(10);
     }
 
 
@@ -39,21 +39,33 @@ class EventController extends Controller
 
     public function show($id){
   
-        $items = Item::where('categoryId', $id)->get();
+        $items = Item::where('categoryId', $id)->paginate(10);
         $category = Category::find($id);
         // use the below if I want to use the 404.blade.php page 
         // if (!$item) {
         //     abort(404);
         // }
         
-        return view('product_details', [
+        return view('product_category', [
             'items' => $items,
             'category' => $category,
             'categories' => $this->getCategories(),
         ]);
     }
-}
 
+    // Display items from search results
+    public function search(Request $request){
+        $search = $request->search;
+        $category = "Search Results for " . $search;
+        $items = Item::where('itemName', 'LIKE', '%' . $search . '%')->paginate(10);
+
+        return view('product_category', [
+            'items' => $items,
+            'category' => (object) ['categoryName' => $category],   
+            'categories' => $this->getCategories(),
+        ]);
+    }
+}
 //Just handy things to rememeber when doing dev work
 //cd .\Sports-Warehouse
 //npm run build
