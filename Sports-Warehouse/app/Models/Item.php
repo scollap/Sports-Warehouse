@@ -22,4 +22,8 @@ class Item extends Model
         'featured',
         'categoryId',
     ];
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'categoryId', 'categoryId');
+    }
 }
