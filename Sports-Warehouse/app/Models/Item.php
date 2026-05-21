@@ -21,7 +21,7 @@ class Item extends Model
         'featured',
         'categoryId',
     ];
-    
+
     /**
      * get categories for item
      *
@@ -29,6 +29,6 @@ class Item extends Model
      */
     public function category(): BelongsTo
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'categoryId', 'categoryId');
     }
 }

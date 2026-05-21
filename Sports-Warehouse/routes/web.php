@@ -9,6 +9,8 @@ Route::get('/', [EventController::class, 'index'])->name('home');
 
 Route::get('/category/{id}', [EventController::class, 'show'])->name('category.show');
 
+Route::get('/product/{id}', [EventController::class, 'item'])->name('product.show');
+
 Route::get('/search', [EventController::class, 'search'])->name('search');
 
 use App\Http\Controllers\QuestionController;

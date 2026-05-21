@@ -60,6 +60,16 @@ class EventController extends Controller
         ]);
     }
 
+    public function item($id)
+    {
+        $item = Item::findOrFail($id);
+
+        return view('item_details', [
+            'item' => $item,
+            'categories' => $this->getCategories(),
+        ]);
+    }
+
     // Display items from search results
     public function search(Request $request){
         $search = $request->search;
