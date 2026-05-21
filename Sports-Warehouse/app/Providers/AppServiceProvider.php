@@ -24,8 +24,8 @@ class AppServiceProvider extends ServiceProvider
     }
 
     //added to make the paginator look nicer
-    public function boot(): void
-    {
-        Paginator::useTailwind();
-    }
+    // public function boot(): void
+    // {
+    //     Paginator::useTailwind();
+    // }
 }

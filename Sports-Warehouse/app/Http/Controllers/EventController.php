@@ -20,26 +20,32 @@ class EventController extends Controller
         return Item::all();
     }
 
-    public function featured()
+    public function featured(Request $request)
     {
-        return Item::where('featured', 1)->paginate(10);
+        return Item::where('featured', 1)->paginate($this->perPage($request));
+    }
+
+    private function perPage(Request $request)
+    {
+        return $request->get('per_page', 10);
     }
 
 
     //functions to handle the routes
-    public function index(){
+    public function index(Request $request){
         $category = "Featured Products";
         return view('index', [
-            'items' => $this->featured(),
+            'items' => $this->featured(request()),
             'category' => $category,
             'categories' => $this->getCategories(),
+            'perPage' => $this->perPage($request),
         ]);
     }
 
 
-    public function show($id){
+    public function show(Request $request,$id){
   
-        $items = Item::where('categoryId', $id)->paginate(10);
+        $items = Item::where('categoryId', $id)->paginate($this->perPage(request()));
         $category = Category::find($id);
         // use the below if I want to use the 404.blade.php page 
         // if (!$item) {
@@ -50,6 +56,7 @@ class EventController extends Controller
             'items' => $items,
             'category' => $category,
             'categories' => $this->getCategories(),
+            'perPage' => $this->perPage($request),
         ]);
     }
 
@@ -57,12 +64,13 @@ class EventController extends Controller
     public function search(Request $request){
         $search = $request->search;
         $category = "Search Results for " . $search;
-        $items = Item::where('itemName', 'LIKE', '%' . $search . '%')->paginate(10);
+        $items = Item::where('itemName', 'LIKE', '%' . $search . '%')->paginate($this->perPage($request));
 
         return view('product_category', [
             'items' => $items,
             'category' => (object) ['categoryName' => $category],   
             'categories' => $this->getCategories(),
+            'perPage' => $this->perPage($request),
         ]);
     }
 }
