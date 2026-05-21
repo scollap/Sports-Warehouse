@@ -11,8 +11,6 @@ class Category extends Model
 
     protected $primaryKey = 'categoryId';
 
-    public $timestamps = false;
-
     public function items()
     {
         return $this->hasMany(Item::class, 'categoryId', 'categoryId');

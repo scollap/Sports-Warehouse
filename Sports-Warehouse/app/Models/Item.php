@@ -10,8 +10,6 @@ class Item extends Model
     protected $table = 'item';
 
     protected $primaryKey = 'itemId';
-
-    public $timestamps = false;
     
     protected $fillable = [
         'itemName',
