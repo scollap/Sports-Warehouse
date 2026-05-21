@@ -3,13 +3,13 @@ use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', [EventController::class, 'index']);
+Route::get('/', [EventController::class, 'index'])->name('home');
 
 
 
-Route::get('/category/{id}', [EventController::class, 'show']);
+Route::get('/category/{id}', [EventController::class, 'show'])->name('category.show');
 
-Route::get('/search', [EventController::class, 'search']);
+Route::get('/search', [EventController::class, 'search'])->name('search');
 
 use App\Http\Controllers\QuestionController;
 

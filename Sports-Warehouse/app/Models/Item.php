@@ -3,15 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Item extends Model
 {
-    //
+
     protected $table = 'item';
 
     protected $primaryKey = 'itemId';
     
-    protected $fillable = [
+    protected $fillable = [ 
         'itemName',
         'photo',
         'price',
@@ -20,8 +21,14 @@ class Item extends Model
         'featured',
         'categoryId',
     ];
-    public function category()
+    
+    /**
+     * get categories for item
+     *
+     * @return BelongsTo
+     */
+    public function category(): BelongsTo
     {
-        return $this->belongsTo(Category::class, 'categoryId', 'categoryId');
+        return $this->belongsTo(Category::class);
     }
 }

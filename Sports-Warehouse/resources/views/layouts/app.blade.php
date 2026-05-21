@@ -21,7 +21,7 @@
                             </a>
                         </li>
                         <li class="menu-text"><a href="#" id="toggleTxt">Menu</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/"><i class="fa-regular fa-circle"></i> Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('home') }}"><i class="fa-regular fa-circle"></i> Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="#"><i class="fa-regular fa-circle"></i> About SW</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('register.index') }}"><i class="fa-regular fa-circle"></i> Contact Us</a></li>
                         <li class="nav-item"><a class="nav-link" href="#"><i class="fa-regular fa-circle"></i> View Products</a></li>
@@ -43,7 +43,7 @@
                 <div class="footer-nav">
                     <h3>Site navigation</h3>
                     <ul>
-                        <li><a href="/">Home</a></li>
+                        <li><a href="{{ route('home') }}">Home</a></li>
                         <li><a href="#">About SW</a></li>
                         <li><a href="{{ route('register.index') }}">Contact US</a></li>
                         <li><a href="#">View products</a></li>
@@ -57,7 +57,7 @@
                 @else
                     <ul>
                         @foreach ($categories as $id => $name)
-                            <li><a href="/category/{{ $id }}">{{ $name }}</a></li>
+                            <li><a href="{{ route('category.show', $id) }}">{{ $name }}</a></li>
                         @endforeach
                     </ul>
                 @endif
