@@ -243,6 +243,7 @@ header {
     width: 100%;
     display: block;
     overflow: hidden;
+    margin: 0;
 }
 
 .logo-and-search__logo img {
@@ -250,10 +251,6 @@ header {
     height: auto;
     object-fit: cover;
     display: block;
-}
-
-.logo-and-search__logo {
-  margin: 0;
 }
 
 .product-search {
@@ -560,112 +557,6 @@ header {
  color: var(--light-blue);
 }
 
-/* Item detail page */
-.item-details {
-  display: grid;
-  gap: 2rem;
-  max-width: 1200px;
-  margin: 2rem auto;
-  padding: 0 1rem;
-}
-
-.item-details__media {
-  width: 100%;
-}
-
-.item-details__media img {
-  width: 100%;
-  height: auto;
-  border-radius: 15px;
-  object-fit: cover;
-}
-
-.item-details__content {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  background: var(--white);
-  border-radius: 15px;
-}
-
-.item-details__category {
-  display: inline-block;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--light-blue);
-  text-transform: uppercase;
-}
-
-.item-details__header h1 {
-  font-size: clamp(2rem, 2.8vw, 3rem);
-  margin: 0.5rem 0 0;
-  color: var(--mid-blue);
-}
-
-.item-details__pricing {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.item-details__price,
-.item-details__sale-price {
-  font-size: 1.85rem;
-  font-weight: 700;
-}
-
-.item-details__price {
-  color: var(--orange);
-}
-
-.item-details__sale-price {
-  color: var(--orange);
-}
-
-.item-details__old-price {
-  color: var(--grey);
-  font-size: 1rem;
-  text-decoration: line-through;
-}
-
-.item-details__description h3 {
-  margin-bottom: 0.75rem;
-  font-size: 1.1rem;
-}
-
-.item-details__description p {
-  line-height: 1.8;
-  color: var(--dark-blue);
-}
-
-.item-details__actions {
-  margin-top: 1.5rem;
-}
-
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.85rem 1.4rem;
-  border-radius: 999px;
-  background: var(--orange);
-  color: var(--white);
-  transition: transform 0.2s ease, background 0.2s ease;
-}
-
-.button:hover {
-  transform: translateY(-1px);
-  background: #eb7b0f;
-}
-
-@media (min-width: 900px) {
-  .item-details {
-    grid-template-columns: 1.2fr 1fr;
-    align-items: start;
-  }
-}
 
 .brands ul {
   display: flex;
@@ -905,21 +796,24 @@ footer .social li {
     }
 }
 
-/* css to fix product display */
+/* Item detail page */
 .item-details {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 40px;
+    max-width: 1200px;
+    margin: 2rem auto;
     padding: 30px;
     align-items: start;
 }
 
 .item-details__image img {
     width: 100%;
+    height: auto;
     max-height: 450px;
     object-fit: contain;
     border-radius: 10px;
-    background:var(--white);
+    background: var(--white);
     padding: 10px;
     border: 1px solid var(--light-blue);
 }
@@ -928,11 +822,15 @@ footer .social li {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    background: var(--white);
+    border-radius: 15px;
 }
 
 .item-details__category {
+    display: inline-block;
     font-size: 14px;
     color: var(--grey);
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
@@ -940,23 +838,33 @@ footer .social li {
 .item-details__header h1 {
     font-size: 28px;
     margin: 10px 0;
+    color: var(--mid-blue);
 }
 
 .item-details__pricing {
     display: flex;
-    gap: 15px;
+    flex-wrap: wrap;
     align-items: center;
+    gap: 15px;
+    margin-top: 1rem;
     font-size: 18px;
 }
 
 .item-details__price {
-    font-weight: bold;
-    color: var(--dark);
+    color: var(--orange);
+    font-size: 1.85rem;
+    font-weight: 700;
 }
 
 .item-details__sale-price {
-    color: var(--red);
-    font-weight: bold;
+    font-size: 0.85rem;
+    text-decoration: line-through;
+}
+
+.item-details__old-price {
+    color: var(--grey);
+    font-size: 1rem;
+    text-decoration: line-through;
 }
 
 .item-details__description {
@@ -965,6 +873,12 @@ footer .social li {
 
 .item-details__description h3 {
     margin-bottom: 5px;
+    font-size: 1.1rem;
+}
+
+.item-details__description p {
+    line-height: 1.8;
+    color: var(--dark-blue);
 }
 
 .button {
@@ -972,6 +886,9 @@ footer .social li {
     padding: 10px 15px;
     border-radius: 6px;
     text-decoration: none;
+    background: var(--orange);
+    color: var(--white);
+    transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .button-secondary {

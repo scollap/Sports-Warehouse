@@ -6,7 +6,7 @@
         <title>@yield('title', 'SW Warehouse')</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modern-normalize@3.0.1/modern-normalize.min.css">
         {{-- <link rel="stylesheet" href="{{ asset('styles/style.css') }}"> not needed with tailwind --}}
-        @vite(['resources/css/app.css','resources/css/style.css', 'resources/js/app.js']) <!-- to use css tailwind -->
+        @vite(['resources/css/style.css','resources/css/app.css', 'resources/js/app.js']) <!-- to use css tailwind -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     </head>
     <body>
