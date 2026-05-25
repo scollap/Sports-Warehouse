@@ -12,8 +12,8 @@
             <p>View our brand<br>new range of</p>
 
             <h2>Sports<br>balls</h2>
-
-            <a href="#" class="button">Shop now</a>
+            <!-- link that does search for balls -->
+            <a href="{{ route('search', ['search' => 'balls']) }}" class="button">Shop now</a>
         </div>
     </div>
 </div>
