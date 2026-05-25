@@ -8,10 +8,10 @@
             <!-- Main Content -->
 
                 <!-- Logo and search products section -->
-            @include('partials.logo_search')
+            @include('partials._Logo_search')
 
                 {{-- Add section to display all categories --}} 
-            @include('partials.categories')
+            @include('partials._categories')
 
 
 
@@ -37,33 +37,13 @@
     </div>
 @endif
 <div class="featured-products">
-@if($items->isEmpty())
-    <p>No products found.</p>
-@else
-    @foreach($items as $item)
-        <a href="{{ route('product.show', $item->itemId) }}" class="item-link">
-            <article>
-                <img src="{{ asset('images/product/' . $item->photo) }}" alt="{{ $item->itemName }}">
-                <div>
-                    <p class="price orange">
-                        ${{ number_format($item->price, 2) }}
-                    </p>
-                    @if($item->salePrice)
-                        <p class="discount">
-                            was <del>${{ number_format($item->salePrice, 2) }}</del>
-                        </p>
-                    @endif
-                </div>
-                <h3>{{ \Illuminate\Support\Str::limit($item->itemName, 50, '...') }}</h3>
-            </article>
-        </a>
-    @endforeach
-@endif
+{{-- display items for the selected category --}}
+@include('partials._cards_items')
 </div>
 <div class="flex justify-center mt-8">
  {{ $items->appends(request()->query())->links() }}   
 </div>
             <!-- Brands -->
-        @include('partials.brands')
+        @include('partials._brands')
 
 @endsection

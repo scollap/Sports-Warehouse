@@ -6,8 +6,8 @@
 
 
     <!-- Main Content -->
-    @include('partials.logo_search')
-    @include('partials.categories')
+    @include('partials._Logo_search')
+    @include('partials._categories')
 
     <div class="white-background">
         <h2 class="orange-bar">{{ $item->itemName }}</h2>
@@ -53,6 +53,6 @@
         </div>
     </section>
 
-    @include('partials.brands')
+    @include('partials._brands')
 
 @endsection

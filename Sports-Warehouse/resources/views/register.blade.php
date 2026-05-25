@@ -8,7 +8,7 @@
 @section('content')
 
     <!-- Logo and search products section -->
-    @include('partials.logo_search')
+    @include('partials._Logo_search')
 
 <div class="mainRegDiv">
     <div class="soonDiv">

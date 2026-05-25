@@ -74,6 +74,7 @@ class EventController extends Controller
 
     public function item($id)
     {
+
         $item = Item::findOrFail($id);
 
         return view('item_details', [
