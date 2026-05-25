@@ -10,7 +10,7 @@
     @include('partials._categories')
 
     <div class="white-background">
-        <h2 class="orange-bar">{{ $item->itemName }}</h2>
+        <h2 class="orange-bar">{{ $item->category?->categoryName ?? 'Uncategorized' }}</h2>
     </div>
 
     <section class="item-details">
@@ -19,9 +19,6 @@
         </div>
 
         <div class="item-details__content">
-            <span class="item-details__category">
-                Category: {{ $item->category?->categoryName ?? 'Uncategorized' }}
-            </span>
 
             <div class="item-details__header">
                 <h1>{{ $item->itemName }}</h1>
