@@ -6,7 +6,7 @@
         <title>@yield('title', 'SW Warehouse')</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modern-normalize@3.0.1/modern-normalize.min.css">
         {{-- <link rel="stylesheet" href="{{ asset('styles/style.css') }}"> not needed with tailwind --}}
-        @vite(['resources/css/style.css','resources/css/app.css', 'resources/js/app.js']) <!-- to use css tailwind -->
+        @vite(['resources/css/app.css', 'resources/js/app.js']) <!-- to use css tailwind -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     </head>
     <body>
@@ -24,7 +24,7 @@
                         <li class="nav-item"><a class="nav-link" href="{{ route('home') }}"><i class="fa-regular fa-circle"></i> Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="#"><i class="fa-regular fa-circle"></i> About SW</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('register.index') }}"><i class="fa-regular fa-circle"></i> Contact Us</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#"><i class="fa-regular fa-circle"></i> View Products</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('products.index') }}"><i class="fa-regular fa-circle"></i> View Products</a></li>
                         <li class="nav-item login-item"><a class="nav-link" href="#"><i class="fas fa-lock"></i> Login</a></li>
                         <li class="cart-item"><a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i> View Cart</a></li>
                         <li class="items-count"><span>0 Items</span></li>
@@ -46,7 +46,8 @@
                         <li><a href="{{ route('home') }}">Home</a></li>
                         <li><a href="#">About SW</a></li>
                         <li><a href="{{ route('register.index') }}">Contact US</a></li>
-                        <li><a href="#">View products</a></li>
+                        {{-- make view producs link to rout that displays all products --}}
+                        <li><a href="{{ route('products.index') }}">View products</a></li>
                         <li><a href="#">Privacy policy</a></li>
                     </ul>
                 </div>

@@ -42,6 +42,18 @@ class EventController extends Controller
         ]);
     }
 
+    public function products(Request $request){
+    //display all products on this page with category as "All Products"
+        $items = Item::paginate($this->perPage($request));
+        $category = (object) ['categoryName' => "All Products"];
+
+        return view('product_category', [
+            'items' => $items,
+            'category' => $category,
+            'categories' => $this->getCategories(),
+            'perPage' => $this->perPage($request),
+        ]);
+    }
 
     public function show(Request $request,$id){
   
@@ -84,6 +96,10 @@ class EventController extends Controller
         ]);
     }
 }
+
+
+
+
 //Just handy things to rememeber when doing dev work
 //cd .\Sports-Warehouse
 //npm run build

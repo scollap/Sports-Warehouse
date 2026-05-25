@@ -21,3 +21,5 @@ Route::get('/question', [QuestionController::class, 'index'])
 Route::post('/question', [QuestionController::class, 'submit'])
     ->name('register.submit');
 
+    //products.index to display all products using the product_category page
+Route::get('/products', [EventController::class, 'products'])->name('products.index');
