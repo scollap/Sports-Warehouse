@@ -6,12 +6,16 @@
             <article>
                 <img src="{{ asset('images/product/' . $item->photo) }}" alt="{{ $item->itemName }}">
                 <div>
-                    <p class="price orange">
-                        ${{ number_format($item->price, 2) }}
-                    </p>
                     @if($item->salePrice)
+                        <p class="price orange">
+                            ${{ number_format($item->salePrice, 2) }}
+                        </p>
                         <p class="discount">
-                            was <del>${{ number_format($item->salePrice, 2) }}</del>
+                            was <del>${{ number_format($item->price, 2) }}</del>
+                        </p>
+                    @else
+                        <p class="price orange">
+                            ${{ number_format($item->price, 2) }}
                         </p>
                     @endif
                 </div>
