@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+
 @section('title', $item->itemName . ' - Sports Warehouse')
 
 @section('content')

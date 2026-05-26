@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Home - Sports Warehouse')
+@section('title', ($category ? $category->categoryName : 'Products') . ' - Sports Warehouse')
 
 @section('content')
 
