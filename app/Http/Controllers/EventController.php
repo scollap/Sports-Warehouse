@@ -89,7 +89,8 @@ class EventController extends Controller
 
 
         $items = Item::where('itemName', 'LIKE', '%' . $search . '%')->paginate($this->perPage($request));
-        $category = count($items) . " Search Results for " . $search;
+        $category = $items->total() . " Search Results for " . $search;
+
         return view('product_category', [
             'items' => $items,
             'category' => (object) ['categoryName' => $category],   
