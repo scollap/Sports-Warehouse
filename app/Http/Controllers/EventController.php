@@ -86,9 +86,10 @@ class EventController extends Controller
     // Display items from search results
     public function search(Request $request){
         $search = $request->search;
-        $category = "Search Results for " . $search;
-        $items = Item::where('itemName', 'LIKE', '%' . $search . '%')->paginate($this->perPage($request));
 
+
+        $items = Item::where('itemName', 'LIKE', '%' . $search . '%')->paginate($this->perPage($request));
+        $category = count($items) . " Search Results for " . $search;
         return view('product_category', [
             'items' => $items,
             'category' => (object) ['categoryName' => $category],   
@@ -96,9 +97,23 @@ class EventController extends Controller
             'perPage' => $this->perPage($request),
         ]);
     }
+
+    public function save(int $id)
+    {
+        $item = Item::findOrFail($id);
+        // get the current list of saved items or degault to empty list
+        $savedItems = session('saved_items', []);
+        //add the new event ID to the list (if its not already there)
+        if (!in_array($id, $savedItems)) {
+            $savedItems[] = $id;
+        }
+        //save the updated list (into session or database)
+        session(['saved_items' => $savedItems]);
+        //redirect the user back to where they come from
+        return redirect()->back()->with('message', 'Item saved successfully!');
+    }
+
 }
-
-
 
 
 //Just handy things to rememeber when doing dev work
