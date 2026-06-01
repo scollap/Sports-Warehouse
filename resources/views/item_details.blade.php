@@ -33,7 +33,7 @@
                         </span>
                     @else
                     <span class="item-details__price">
-                        Was: ${{ number_format($item->price, 2) }}
+                        Price: ${{ number_format($item->price, 2) }}
                     </span>
                     @endif
                 </div>
