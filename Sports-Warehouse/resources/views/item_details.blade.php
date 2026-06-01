@@ -18,7 +18,6 @@
         <div class="item-details__image">
             <img src="{{ asset('images/product/' . $item->photo) }}" alt="{{ $item->itemName }}">
         </div>
-
         <div class="item-details__content">
 
             <div class="item-details__header">

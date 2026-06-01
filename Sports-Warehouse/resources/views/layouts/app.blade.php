@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>@yield('title', 'SW Warehouse')</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modern-normalize@3.0.1/modern-normalize.min.css">
-        {{-- <link rel="stylesheet" href="{{ asset('styles/style.css') }}"> not needed with tailwind --}}
+        <link rel="stylesheet" href="{{ asset('styles/style.css') }}"> 
         @vite(['resources/css/app.css', 'resources/js/app.js']) <!-- to use css tailwind -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     </head>
@@ -51,18 +51,7 @@
                         <li><a href="#">Privacy policy</a></li>
                     </ul>
                 </div>
-                <div class="footer-categories">
-                {{-- Add section to display all categories in footer --}}
-                @if (empty($categories))
-                    <p>No categories available.</p>
-                @else
-                    <ul>
-                        @foreach ($categories as $id => $name)
-                            <li><a href="{{ route('category.show', $id) }}">{{ $name }}</a></li>
-                        @endforeach
-                    </ul>
-                @endif
-                </div> 
+                @include('partials._categories', ['wrapperClass' => 'footer-categories', 'showIcon' => false])
 
                 <div class="footer-socials">
                     <h3>Contact Sports Warehouse</h3>

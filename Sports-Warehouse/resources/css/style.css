@@ -658,33 +658,33 @@ footer {
     color: var(--grey);
 }
 
-/* footer product categoies */
+/* footer product categories */
 .footer-categories {
     display: none;
 }
 
 @media (min-width: 650px) {
     .footer-categories {
-        display: block;
         background-color: var(--orange);
         flex-grow: 1;
         max-width: 320px;
         padding: 20px;
+        display: block;
     }
 
     .footer-categories ul {
-        list-style: none;
-        padding: 0;
         margin: 0;
+        padding: 0;
+        list-style: none;
     }
 
     .footer-categories a {
-        text-decoration: none;
         color: var(--white);
-        display: flex;
         align-items: center;
         gap: 5px;
         margin-bottom: 8px;
+        text-decoration: none;
+        display: flex;
     }
 
     .footer-categories li a::before {
@@ -701,6 +701,8 @@ footer {
         color: var(--grey);
     }
 }
+
+/* footer Socials */
 
 /* footer Socials */
 .footer-socials {
