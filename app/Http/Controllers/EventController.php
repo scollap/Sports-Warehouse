@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Item;
+use Illuminate\Support\Facades\Session;
+
 
 class EventController extends Controller
 {
@@ -102,20 +104,37 @@ class EventController extends Controller
     public function save(int $id)
     {
         $item = Item::findOrFail($id);
-        // get the current list of saved items or degault to empty list
-        $savedItems = session('saved_items', []);
-        //add the new event ID to the list (if its not already there)
+
+        $savedItems = Session::get('saved_items', []);
+
         if (!in_array($id, $savedItems)) {
             $savedItems[] = $id;
         }
-        //save the updated list (into session or database)
-        session(['saved_items' => $savedItems]);
-        //redirect the user back to where they come from
-        return redirect()->back()->with('message', 'Item saved successfully!');
+
+        Session::put('saved_items', $savedItems);
+
+        return redirect()->back()->with('message', 'Item added to cart!');
     }
 
-}
+    public function deleteSaved($id)
+    {
+        $savedItems = Session::get('saved_items', []);
+        $savedItems = array_diff($savedItems, [$id]);
+        Session::put('saved_items', $savedItems);
 
+        return redirect()->back()->with('message', 'Item removed from cart!');
+    }
+
+    public function showSaved()
+    {
+        $savedItems = Session::get('saved_items', []);
+        $items = Item::whereIn('itemId', $savedItems)->get();
+
+        return view('saved', ['items' => $items]);
+    }
+
+
+}
 
 //Just handy things to rememeber when doing dev work
 //cd .\Sports-Warehouse

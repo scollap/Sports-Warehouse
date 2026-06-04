@@ -470,6 +470,7 @@ header {
   flex-wrap: wrap;
   gap: 15px; 
   background: var(--white);
+  margin-top: 5px;
 }
 
 .featured-products article {
@@ -483,7 +484,7 @@ header {
   height: 250px;
   border-radius: 5px;
   padding: 10px; 
-  margin-bottom: 1rem;
+  margin-bottom: 5px;
   text-align: center;
 }
 

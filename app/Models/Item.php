@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Attribute;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Session;
 
 use function PHPUnit\Framework\fileExists;
 
@@ -35,7 +36,11 @@ class Item extends Model
         return $this->belongsTo(Category::class, 'categoryId', 'categoryId');
     }
 
-    // add to use when displaying images on pages
+    /**
+     * Get the image URL for the item.
+     *
+     * @return Attribute
+     */
     public function imageUrl(): Attribute
     {
         return Attribute::get(function () {
@@ -43,7 +48,20 @@ class Item extends Model
             {
                         return asset('storage/' . $this->photo);
             }  
-        return asset('storage/placeholder.jpg');
+        return asset('placeholder.jpg');
+        });
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return Attribute
+     */
+    protected function isSaved(): Attribute
+    {
+        return Attribute::get(function () {
+            $savedItems = Session::get('saved_items', []);
+            return in_array($this->itemId, $savedItems);
         });
     }
 }
