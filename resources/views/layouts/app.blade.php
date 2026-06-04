@@ -5,7 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>@yield('title', 'SW Warehouse')</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modern-normalize@3.0.1/modern-normalize.min.css">
-        <link rel="stylesheet" href="{{ asset('css/style.css') }}"> 
+        {{-- <link rel="stylesheet" href="{{ asset('css/style.css') }}">  --}}
+        {{-- <link rel="stylesheet" href="{{ asset('js/app.js') }}"> --}}
         @vite(['resources/css/app.css', 'resources/js/app.js']) <!-- to use css tailwind -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     </head>
@@ -27,7 +28,7 @@
                         <li class="nav-item"><a class="nav-link" href="{{ route('products.index') }}"><i class="fa-regular fa-circle"></i> View Products</a></li>
                         <li class="nav-item login-item"><a class="nav-link" href="#"><i class="fas fa-lock"></i> Login</a></li>
                         <li class="cart-item"><a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i> View Cart</a></li>
-                        <li class="items-count"><span>0 Items</span></li>
+                        <li class="items-count"><span>{{ count(session('saved_items', [])) }} Items</span></li>
                     </ul>
                 </nav>
             </header>
@@ -83,7 +84,7 @@
                 <p>Website made by Awesomesauce Design and Thomas Scollay</p>
             </div>
         </footer>
-        {{-- <script src="scripts/script.js"></script> not needed with tailwind --}}
+        {{-- <script src={{ asset('js/script.js') }}></script> not needed with tailwind --}}
         </div>
     </body>
 </html>

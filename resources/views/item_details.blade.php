@@ -46,7 +46,14 @@
 
             <div class="item-details__actions">
                 <a href="{{ url()->previous() }}" class="button button-secondary">Back</a>
+                <form action="{{ route('cart.add', $item->itemId) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="button button-primary cursor-pointe">
+                        Add to Cart
+                    </button>
+                </form>
             </div>
+
         </div>
     </section>
 

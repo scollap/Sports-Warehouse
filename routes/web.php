@@ -23,3 +23,7 @@ Route::post('/question', [QuestionController::class, 'submit'])
 
     //products.index to display all products using the product_category page
 Route::get('/products', [EventController::class, 'products'])->name('products.index');
+
+
+//route to add to cart
+Route::post('/cart/add/{id}', [EventController::class, 'save'])->name('cart.add');
