@@ -36,11 +36,15 @@ class EventController extends Controller
     //functions to handle the routes
     public function index(Request $request){
         $category = "Featured Products";
+        $recentlyViewed = Session::get('recently_viewed', []);
+        $recentlyViewedItems = Item::whereIn('itemId', $recentlyViewed)
+            ->get();
         return view('index', [
             'items' => $this->featured(request()),
             'category' => $category,
             'categories' => $this->getCategories(),
             'perPage' => $this->perPage($request),
+            'recentlyViewed' => $recentlyViewedItems,
         ]);
     }
 
@@ -48,29 +52,36 @@ class EventController extends Controller
     //display all products on this page with category as "All Products"
         $items = Item::paginate($this->perPage($request));
         $category = (object) ['categoryName' => "All Products"];
-
+        $recentlyViewed = Session::get('recently_viewed', []);
+        $recentlyViewedItems = Item::whereIn('itemId', $recentlyViewed)
+            ->get();
         return view('product_category', [
             'items' => $items,
             'category' => $category,
             'categories' => $this->getCategories(),
             'perPage' => $this->perPage($request),
+            'recentlyViewed' => $recentlyViewedItems,
         ]);
     }
 
     public function show(Request $request,$id){
-  
+
         $items = Item::where('categoryId', $id)->paginate($this->perPage(request()));
+
         $category = Category::find($id);
         // use the below if I want to use the 404.blade.php page 
         // if (!$item) {
         //     abort(404);
         // }
-        
+        $recentlyViewed = Session::get('recently_viewed', []);
+        $recentlyViewedItems = Item::whereIn('itemId', $recentlyViewed)
+            ->get();
         return view('product_category', [
             'items' => $items,
             'category' => $category,
             'categories' => $this->getCategories(),
             'perPage' => $this->perPage($request),
+            'recentlyViewed' => $recentlyViewedItems,
         ]);
     }
 
@@ -78,10 +89,21 @@ class EventController extends Controller
     {
 
         $item = Item::findOrFail($id);
+         // add section to add item to recentlyviewed settion data
+        $recentlyViewed = Session::get('recently_viewed', []);
+        $recentlyViewed = array_diff($recentlyViewed, [$id]);
+        array_unshift($recentlyViewed, $id);
+        Session::put('recently_viewed', array_slice($recentlyViewed, 0, 5)); // Keep only the last 5 items
 
+        // Fetch the full item objects for recently viewed items
+        $recentlyViewed = array_slice(array_values($recentlyViewed), 0, 5); 
+        Session::put('recently_viewed', $recentlyViewed);
+        $recentlyViewedItems = Item::whereIn('itemId', $recentlyViewed)
+        ->get();
         return view('item_details', [
             'item' => $item,
             'categories' => $this->getCategories(),
+            'recentlyViewed' => $recentlyViewedItems,
         ]);
     }
 
@@ -92,12 +114,13 @@ class EventController extends Controller
 
         $items = Item::where('itemName', 'LIKE', '%' . $search . '%')->paginate($this->perPage($request));
         $category = $items->total() . " Search Results for " . $search;
-
+        $recentlyViewedItems = Session::get('recently_viewed', []);
         return view('product_category', [
             'items' => $items,
             'category' => (object) ['categoryName' => $category],   
             'categories' => $this->getCategories(),
             'perPage' => $this->perPage($request),
+            'recentlyViewed' => $recentlyViewedItems,
         ]);
     }
 
@@ -112,8 +135,8 @@ class EventController extends Controller
         }
 
         Session::put('saved_items', $savedItems);
-
-        return redirect()->back()->with('message', 'Item added to cart!');
+        return redirect()->route('saved.show')->with('message', 'Item added to cart!');;
+        // return redirect()->back()->with('message', 'Item added to cart!');
     }
 
     public function deleteSaved($id)

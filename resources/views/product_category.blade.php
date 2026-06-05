@@ -13,8 +13,6 @@
                 {{-- Add section to display all categories --}} 
             @include('partials._categories')
 
-
-
     <!-- Featured Products -->
         <div class="white-background">
             <h2 class="orange-bar">{{ $category ? $category->categoryName : 'No Category'  }}</h2>
@@ -43,7 +41,15 @@
 <div class="flex justify-center mt-8">
  {{ $items->appends(request()->query())->links() }}   
 </div>
-            <!-- Brands -->
-        @include('partials._brands')
+
+
+
+@include('partials._recentlyVieded')
+
+{{-- add spot to show five recently viewed items
+@include('partials._recently_viewed') --}}
+
+{{-- Brands --}}
+@include('partials._brands')
 
 @endsection

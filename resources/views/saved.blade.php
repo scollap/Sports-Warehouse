@@ -15,15 +15,12 @@
         @else
             @foreach($items as $item)
                 <a href="{{ route('product.show', $item->itemId) }}" class="item-link">
-                    <article class="m-5 P-5">
+                    <article >
                         <img src="{{ asset('images/product/' . $item->photo) }}" alt="{{ $item->itemName }}">
                         <div>
                             @if($item->salePrice)
                                 <p class="price orange">
                                     ${{ number_format($item->salePrice, 2) }}
-                                </p>
-                                <p class="discount">
-                                    was <del>${{ number_format($item->price, 2) }}</del>
                                 </p>
                             @else
                                 <p class="price orange">
@@ -32,6 +29,12 @@
                             @endif
                         </div>
                         <h3>{{ \Illuminate\Support\Str::limit($item->itemName, 50, '...') }}</h3>
+                        <form action="{{ route('cart.remove', $item->itemId) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="button">
+                                Remove
+                            </button>
+                        </form>
                     </article>
                 </a>
             @endforeach

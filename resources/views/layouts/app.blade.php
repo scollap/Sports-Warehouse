@@ -28,7 +28,7 @@
                         <li class="nav-item"><a class="nav-link" href="{{ route('products.index') }}"><i class="fa-regular fa-circle"></i> View Products</a></li>
                         <li class="nav-item login-item"><a class="nav-link" href="#"><i class="fas fa-lock"></i> Login</a></li>
                         <li class="cart-item"><a class="nav-link" href="{{ route('saved.show') }}"><i class="fas fa-shopping-cart"></i> View Cart</a></li>
-                        <li class="items-count"><span>{{ count(session('saved_items', [])) }} Items</span></li>
+                        <li class="items-count"><span onclick="window.location='{{ route('saved.show') }}'" role="link" style="cursor: pointer;">{{ count(session('saved_items', [])) }} Items</span></li>
                     </ul>
                 </nav>
             </header>

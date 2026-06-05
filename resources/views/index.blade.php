@@ -38,11 +38,13 @@
 <div class="featured-products">
 {{-- display featured items --}}
 @include('partials._cards_items')
-
 </div>
 <div class="flex justify-center mt-8">
     {{ $items->links() }}
 </div>
+
+{{-- display recently viewed items --}}
+@include('partials._recentlyVieded')
             <!-- Brands -->
         @include('partials._brands')
 
