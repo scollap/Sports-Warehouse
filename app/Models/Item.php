@@ -26,6 +26,12 @@ class Item extends Model
         'categoryId',
     ];
 
+    protected $casts = [
+        'price' => 'decimal:2',
+        'salePrice' => 'decimal:2',
+        'featured' => 'boolean',
+    ];
+
     /**
      * get categories for item
      *
