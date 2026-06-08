@@ -15,11 +15,14 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('order_id')
-                ->constrained()
+                ->constrained('orders')
                 ->cascadeOnDelete();
 
-            $table->foreignId('item_id')
-                ->constrained('items')
+            $table->integer('item_id');
+
+            $table->foreign('item_id')
+                ->references('itemId')
+                ->on('item')
                 ->cascadeOnDelete();
 
             $table->integer('quantity');

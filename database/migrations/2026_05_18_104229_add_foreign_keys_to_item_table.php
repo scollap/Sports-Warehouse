@@ -6,23 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::table('item', function (Blueprint $table) {
-            $table->foreign('category_id')->references('categoryId')->on('categories');
+            $table->foreign('categoryId')
+                  ->references('categoryId')
+                  ->on('category');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::table('item', function (Blueprint $table) {
-            $table->dropForeign('item_category_id_foreign');
+            $table->dropForeign(['categoryId']);
         });
     }
 };
