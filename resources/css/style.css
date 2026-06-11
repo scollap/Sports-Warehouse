@@ -503,7 +503,7 @@ header {
 @media (min-width: 650px) {
   .featured-products article div {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   gap: 5px;
   }
 }
