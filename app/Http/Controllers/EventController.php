@@ -170,7 +170,7 @@ class EventController extends Controller
         $validatedData = $request->validate([
             'customer_firstname' => 'required|string|min:3|max:255',
             'customer_lastname' => 'required|string|min:3|max:255',
-            'current_password' => 'required|string|min:8',
+            'customer_phone' => 'required|string|min:8',
             'customer_email' => 'required|email|max:255',
             'customer_address' => 'required|string|min:5|max:255',
             'customer_comment' => 'nullable|string|max:500',
