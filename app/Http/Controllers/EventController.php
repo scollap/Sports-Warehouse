@@ -170,6 +170,8 @@ class EventController extends Controller
         $validatedData = $request->validate([
             'customer_name' => 'required|string|min:3|max:255',
             'customer_email' => 'required|email|max:255',
+            'customer_address' => 'required|string|min:5|max:255',
+            'customer_comment' => 'nullable|string|max:500',
         ]);
 
         $savedItems = Session::get('saved_items', []);
@@ -198,6 +200,8 @@ class EventController extends Controller
         $order = Orders::create([
             'customer_name' => $validatedData['customer_name'],
             'customer_email' => $validatedData['customer_email'],
+            'address' => $validatedData['customer_address'],
+            'comments' => $validatedData['customer_comment'],
             'total_price' => $totalPrice,
         ]);
         

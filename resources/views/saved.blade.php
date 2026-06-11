@@ -1,52 +1,76 @@
 @extends('layouts.app')
 
-
 @section('title', 'Saved Items - Sports Warehouse')
 
 @section('content')
 
+@include('partials._Logo_search')
 
-    <!-- Main Content -->
-    {{-- use to display saved items  --}}
-    <p>Here is the items in your cart, you currently have {{ $items->count() }}.</p>
-    <div class="featured-products flex1">
+<div class="mainRegDiv">
+
+    <div class="formDiv">
+
         @if($items->isEmpty())
-            <p>No saved items yet.</p>
+
+            <div class="empty-cart">
+                <h3>Your cart is empty</h3>
+                <p>Browse our products and add some items to get started.</p>
+            </div>
+
         @else
-            @foreach($items as $item)
-                <a href="{{ route('product.show', $item->itemId) }}" class="item-link">
-                    <article >
-                        <img src="{{ asset('images/product/' . $item->photo) }}" alt="{{ $item->itemName }}">
-                        <div>
-                            @if($item->salePrice)
-                                <p class="price orange">
-                                    ${{ number_format($item->salePrice, 2) }}
-                                </p>
-                            @else
-                                <p class="price orange">
-                                    ${{ number_format($item->price, 2) }}
-                                </p>
-                            @endif
-                        </div>
-                        <h3>{{ \Illuminate\Support\Str::limit($item->itemName, 50, '...') }}</h3>
+
+            <div class="cart-summary">
+                <h3>Order Summary</h3>
+                <p>Total Items: {{ $items->count() }}</p>
+            </div>
+
+            <div class="cart-grid">
+
+                @foreach($items as $item)
+
+                    <div class="cart-card">
+
+                        <a href="{{ route('product.show', $item->itemId) }}">
+                            <img
+                                src="{{ asset('images/product/' . $item->photo) }}"
+                                alt="{{ $item->itemName }}"
+                            >
+
+                            <h3>
+                                {{ \Illuminate\Support\Str::limit($item->itemName, 50, '...') }}
+                            </h3>
+                        </a>
+
+                        <p class="price orange">
+                            $
+                            {{ number_format($item->salePrice ?? $item->price, 2) }}
+                        </p>
+
                         <form action="{{ route('cart.remove', $item->itemId) }}" method="POST">
                             @csrf
-                            <button type="submit" class="button">
+                            <button type="submit" class="remove-btn">
                                 Remove
                             </button>
                         </form>
-                    </article>
+
+                    </div>
+
+                @endforeach
+
+            </div>
+
+            <div class="checkout-section">
+
+                <a href="{{ route('items.checkout_form') }}" class="button">
+                    Proceed to Checkout
                 </a>
-            @endforeach
+
+            </div>
+
         @endif
-        <div>
-            <form action="{{ route('items.checkout_form') }}" method="POST">
-                @csrf
-                <button type="submit" class="button">
-                    Checkout
-                </button>
-            </form>
-        </div>
+
     </div>
+
+</div>
 
 @endsection
