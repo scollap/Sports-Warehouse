@@ -11,11 +11,21 @@
 
     <div class="mainRegDiv">
 
-        <div class="soonDiv">
+        <div class="checkoutDiv">
             <h2>Checkout</h2>
             <p>
                 Complete your details below to finalise your order.
                 You currently have {{ $items->count() }} item(s) in your cart.
+                {{-- display a list of items in the cart --}}
+                <div class="cart-summary">
+                    <ul>
+                        <p class="text-lg border-b border-[#00aced] pb-2">Item summary:</p>
+                        @foreach ($items as $item)
+                            <li><p class="text-sm"> 🏀 {{ $item->itemName }} - ${{ number_format($item->price, 2) }}</p></li>
+                        @endforeach
+                        <p class="text-lg border-t border-[#00aced]  pb-2">Total Price: ${{ number_format($items->sum('price'), 2) }}</p>
+                    </ul>
+                </div>
             </p>
         </div>
 
@@ -43,18 +53,53 @@
                     <legend>Checkout Details</legend>
 
                     <div class="form-row">
-                        <label for="customer_name">Your Name*</label>
+                        <label for="customer_firstname">First Name*</label>
 
                         <input
                             class="form-input"
                             type="text"
-                            id="customer_name"
-                            name="customer_name"
-                            value="{{ old('customer_name') }}"
+                            id="customer_firstname"
+                            name="customer_firstname"
+                            value="{{ old('customer_firstname') }}"
                             required
                         >
 
-                        @error('customer_name')
+                        @error('customer_firstname')
+                            <span class="error-message">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                    </div>
+
+                    <div class="form-row">
+                        <label for="customer_lastname">Last Name*</label>
+                        <input
+                            class="form-input"
+                            type="text"
+                            id="customer_lastname"
+                            name="customer_lastname"
+                            value="{{ old('customer_lastname') }}"
+                            required
+                        >
+
+                        @error('customer_lastname')
+                            <span class="error-message">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                    </div>
+
+                    <div class="form-row">
+                        <label for="customer_phone">Phone Number</label>
+
+                        <input
+                            class="form-input"
+                            type="text"
+                            id="customer_phone"
+                            name="customer_phone"
+                            value="{{ old('customer_phone') }}"
+                        >
+                        @error('customer_phone')
                             <span class="error-message">
                                 {{ $message }}
                             </span>

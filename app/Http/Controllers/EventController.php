@@ -168,7 +168,9 @@ class EventController extends Controller
     {
         //validat user detials
         $validatedData = $request->validate([
-            'customer_name' => 'required|string|min:3|max:255',
+            'customer_firstname' => 'required|string|min:3|max:255',
+            'customer_lastname' => 'required|string|min:3|max:255',
+            'current_password' => 'required|string|min:8',
             'customer_email' => 'required|email|max:255',
             'customer_address' => 'required|string|min:5|max:255',
             'customer_comment' => 'nullable|string|max:500',
@@ -198,7 +200,9 @@ class EventController extends Controller
         
         // Create the order
         $order = Orders::create([
-            'customer_name' => $validatedData['customer_name'],
+            'customer_firstname' => $validatedData['customer_firstname'],
+            'customer_lastname' => $validatedData['customer_lastname'],
+            'customer_phone' => $validatedData['customer_phone'],
             'customer_email' => $validatedData['customer_email'],
             'address' => $validatedData['customer_address'],
             'comments' => $validatedData['customer_comment'],

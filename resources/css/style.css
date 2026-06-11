@@ -999,7 +999,30 @@ footer .social li {
     margin: 20px 0;
 }
 
+.cart-summary p {
+  color: var(--dark-blue);
+}
+
 .cart-summary h3 {
     margin-top: 0;
     color: #333;
+}
+
+.checkoutDiv {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 8px;
+  margin-right: 10px;
+  max-width: 450px;
+}
+
+.checkoutDiv h2 {
+  font-size: 2em;
+  margin-top: 0;
+  border-bottom: 1px solid #00aced;
+}
+
+.checkoutDiv p {
+   padding: 5px 0;
 }
