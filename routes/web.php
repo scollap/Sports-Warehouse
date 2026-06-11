@@ -3,6 +3,7 @@ use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use App\Models\Item;
+use App\Models\Category;
 
 Route::get('/', [EventController::class, 'index'])
     ->name('home');
@@ -39,12 +40,12 @@ Route::post('/cart/remove/{id}', [EventController::class, 'deleteSaved'])
     ->name('cart.remove');
 
 Route::get('/checkout', function () {
-        $category = "Featured Products";
+        $category = Category::pluck('categoryName', 'categoryId')->toArray();
         $savedItemsIds = Session::get('saved_items', []);
         $items = Item::whereIn('itemId', $savedItemsIds)->get();
         return view('registration.checkout', [
             'items' => $items, 
-            'category' => $category,
+            'categories' => $category,
         ],);
     })->name('items.checkout_form');
 

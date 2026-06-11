@@ -6,6 +6,8 @@
 
 @include('partials._Logo_search')
 
+@include('partials._categories')
+
 <div class="mainRegDiv">
 
     <div class="formDiv">
@@ -61,7 +63,7 @@
 
             <div class="checkout-section">
 
-                <a href="{{ route('items.checkout_form') }}" class="button">
+                <a href="{{ route('items.checkout_form') }}" class="buttonBlue">
                     Proceed to Checkout
                 </a>
 
@@ -72,5 +74,7 @@
     </div>
 
 </div>
+
+@include('partials._brands')
 
 @endsection

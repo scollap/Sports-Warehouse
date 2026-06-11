@@ -155,7 +155,10 @@ class EventController extends Controller
         $savedItems = Session::get('saved_items', []);
         $items = Item::whereIn('itemId', $savedItems)->get();
 
-        return view('saved', ['items' => $items]);
+        return view('saved', [
+            'items' => $items,
+            'categories' => Category::pluck('categoryName', 'categoryId')->toArray(),
+        ]);
     }
 
     /**
@@ -217,6 +220,7 @@ class EventController extends Controller
         Session::forget('saved_items');
         //redirect with success message
         //or  load a "confimation view" with order details
+        //include 'categories' => $this->getCategories(), in the return
         return redirect('/')->with('success', 'Checkout successful');
     }
 

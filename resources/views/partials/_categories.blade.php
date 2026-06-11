@@ -23,4 +23,5 @@
             @endforeach
         </ul>
     </div>
+    @include('partials._flash-messages')
 @endif

@@ -9,6 +9,7 @@
 
     @include('partials._Logo_search')
 
+
     <div class="mainRegDiv">
 
         <div class="checkoutDiv">
@@ -19,7 +20,7 @@
                 {{-- display a list of items in the cart --}}
                 <div class="cart-summary">
                     <ul>
-                        <p class="text-lg border-b border-[#00aced] pb-2">Item summary:</p>
+                        <p class="text-lg border-b border-[#00aced] pb-2">Cart summary:</p>
                         @foreach ($items as $item)
                             <li><p class="text-sm"> 🏀 {{ $item->itemName }} - ${{ number_format($item->price, 2) }}</p></li>
                         @endforeach
@@ -153,11 +154,6 @@
                             name="customer_comment"
                         >{{ old('customer_comment') }}</textarea>
                     </div>  
-
-                    <div class="form-row">
-                        <label>Cart Summary</label>
-                        <p>{{ $items->count() }} item(s) ready for checkout.</p>
-                    </div>
                     <div class="flex justify-between"> 
                         <div class="form-row">
                             <a href="{{ route('saved.show') }}" class="button">

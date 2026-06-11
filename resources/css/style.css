@@ -895,6 +895,24 @@ footer .social li {
     cursor: pointer;
 }
 
+.button:hover {
+  background-color: darkorange;
+}
+
+.buttonBlue {
+  display: inline-block;
+  padding: 0.4em 0.8em;
+  border: none;
+  border-radius: 5px;
+  background-color: #00aced;
+  color: white;
+  cursor: pointer;
+}
+
+.buttonBlue:hover {
+  background-color: #034d68;
+}
+
 .button-secondary {
     background: var(--border-grey);
     color: var(--grey);
