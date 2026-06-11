@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Item;
 use Illuminate\Support\Facades\Session;
+use App\Models\Orders;
+use App\Models\OrderItems;
 
 
 class EventController extends Controller
@@ -156,6 +158,59 @@ class EventController extends Controller
         return view('saved', ['items' => $items]);
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function checkout(Request $request)
+    {
+        //validat user detials
+        $validatedData = $request->validate([
+            'customer_name' => 'required|string|min:3|max:255',
+            'customer_email' => 'required|email|max:255',
+        ]);
+
+        $savedItems = Session::get('saved_items', []);
+        
+        if (empty($savedItems)) {
+            return redirect('/')->with('error', 'Your cart is empty');
+        }
+        
+        // Calculate total price for all items
+        $totalPrice = 0;
+        $orderItemsData = [];
+        
+        foreach ($savedItems as $itemId) {
+            $item = Item::find($itemId);
+            if ($item) {
+                $totalPrice += $item->price;
+                $orderItemsData[] = [
+                    'item_id' => $itemId,
+                    'quantity' => 1,
+                    'price' => $item->price,
+                ];
+            }
+        }
+        
+        // Create the order
+        $order = Orders::create([
+            'customer_name' => $validatedData['customer_name'],
+            'customer_email' => $validatedData['customer_email'],
+            'total_price' => $totalPrice,
+        ]);
+        
+        // Create order items for this order
+        foreach ($orderItemsData as $itemData) {
+            $order->orderItems()->create($itemData);
+        }
+
+        Session::forget('saved_items');
+        //redirect with success message
+        //or  load a "confimation view" with order details
+        return redirect('/')->with('success', 'Checkout successful');
+    }
 
 }
 

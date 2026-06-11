@@ -9,7 +9,7 @@
     <!-- Main Content -->
     {{-- use to display saved items  --}}
     <p>Here is the items in your cart, you currently have {{ $items->count() }}.</p>
-    <div class="featured-products">
+    <div class="featured-products flex1">
         @if($items->isEmpty())
             <p>No saved items yet.</p>
         @else
@@ -39,6 +39,14 @@
                 </a>
             @endforeach
         @endif
+        <div>
+            <form action="{{ route('items.checkout_form') }}" method="POST">
+                @csrf
+                <button type="submit" class="button">
+                    Checkout
+                </button>
+            </form>
+        </div>
     </div>
 
 @endsection
