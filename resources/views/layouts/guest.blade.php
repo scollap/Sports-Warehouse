@@ -1,4 +1,27 @@
-<!DOCTYPE html>
+@extends('layouts.app')
+
+@section('title', 'Login - Sports Warehouse')
+
+@section('content')
+
+@include('partials._Logo_search')
+
+<div class="mainRegDiv">
+
+    <h2>Login Below:</h2>
+
+
+</div>
+
+@endsection
+
+
+
+
+
+
+{{-- original guest blade file below --}}
+{{-- <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -27,4 +50,4 @@
             </div>
         </div>
     </body>
-</html>
+</html> --}}

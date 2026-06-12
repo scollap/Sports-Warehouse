@@ -1044,3 +1044,140 @@ footer .social li {
 .checkoutDiv p {
    padding: 5px 0;
 }
+
+/* LOGIN + FORM SHARED STYLING */
+
+.mainRegDiv {
+    max-width: 960px;
+    margin: auto;
+    padding: 20px;
+}
+
+.soonDiv {
+    background: var(--dark-blue);
+    color: var(--white);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.formDiv {
+    background: var(--white);
+    border: 1px solid var(--border-grey);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px var(--black-15);
+}
+
+.formDiv h2 {
+    color: var(--mid-blue);
+}
+
+fieldset {
+    border: none;
+}
+
+legend {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--dark-blue);
+}
+
+.form-row {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-input {
+    padding: 10px;
+    border: 1px solid var(--border-grey);
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--light-blue);
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+}
+
+/* styling for login in navigation */
+.user-nav {
+  position: relative;
+}
+
+.user-btn {
+  background: none;
+  border: none;
+  color: var(--white);
+  cursor: pointer;
+  font: inherit;
+  padding: 14px 16px;
+}
+
+/* dropdown behaves like normal nav item positioning */
+.user-nav {
+    position: relative;   
+    display: inline-block;
+}
+
+@media (max-width: 768px) {
+    .user-nav {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .user-dropdown {
+        right: 10px;   /* or 0 */
+        left: auto;
+    }
+}
+
+.user-btn {
+    background: var(--orange);
+    color: var(--white);
+    border: none;
+    padding: 10px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.user-btn:hover {
+    background: var(--mid-blue);
+}
+
+.user-dropdown {
+    position: absolute;
+    right: 0;
+    top: 110%;
+    background: var(--white);
+    border: 1px solid var(--border-grey);
+    border-radius: 8px;
+    box-shadow: 0 6px 16px var(--black-15);
+    display: none;
+    overflow: hidden;
+}
+
+.user-dropdown a,
+.user-dropdown button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    color: var(--dark-blue);
+    cursor: pointer;
+}
+.user-dropdown a:hover,
+.user-dropdown button:hover {
+    background: var(--light-blue);
+    color: var(--white);
+}

@@ -27,16 +27,29 @@
                         <li class="nav-item"><a class="nav-link" href="#"><i class="fa-regular fa-circle"></i> About SW</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('register.index') }}"><i class="fa-regular fa-circle"></i> Contact Us</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('products.index') }}"><i class="fa-regular fa-circle"></i> View Products</a></li>
-                        <li class="nav-item login-item"><a class="nav-link" href="#"><i class="fas fa-lock"></i> Login</a></li>
-                        <li class="cart-item"><a class="nav-link" href="{{ route('saved.show') }}"><i class="fas fa-shopping-cart"></i> View Cart</a></li>
-                        <li class="items-count"><span onclick="window.location='{{ route('saved.show') }}'" role="link" style="cursor: pointer;">{{ count(session('saved_items', [])) }} Items</span></li>
+                        @auth
+                             {{-- have two extra LI so the css styling works correctly  --}}
+                            <li></li><li></li>
+                            <li class="nav-item user-item">
+                                @include('layouts.simple-nav')
+                            </li>
+                        @else
+                            <li class="nav-item login-item"><a class="nav-link" href="{{ route('login') }}"><i class="fas fa-lock"></i> Login</a></li>
+                            <li class="cart-item"><a class="nav-link" href="{{ route('saved.show') }}"><i class="fas fa-shopping-cart"></i> View Cart</a></li>
+                            <li class="items-count"><span onclick="window.location='{{ route('saved.show') }}'" role="link" style="cursor: pointer;">{{ count(session('saved_items', [])) }} Items</span></li>
+                        @endauth
                     </ul>
                 </nav>
+                {{-- @auth
+                    user is logged in show simple dropdown navigation
+                    @include('layouts.simple-nav')
+                @endauth --}}
             </header>
 
         {{-- add content here for all pages --}}
         <main class="main-section">
             @yield('content')
+            {{ $slot ?? "" }}
         </main>
 
         <!-- Footer -->
