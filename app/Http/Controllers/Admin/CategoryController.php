@@ -13,7 +13,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        //Display a listing of the resource.
+        $categoryList = Category::all();
+        $categories = Category::pluck('categoryName', 'categoryId')->toArray();
+        return view('admin.categories.index', compact('categories', 'categoryList'));
     }
 
     /**
@@ -22,6 +25,7 @@ class CategoryController extends Controller
     public function create()
     {
         //
+        return view('admin.categories.create');
     }
 
     /**
@@ -30,6 +34,11 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
+        $validated = $request->validate([
+            'categoryName' => 'required|unique:category,categoryName|String|min:2|max:50'
+        ]);
+        Category::create($validated);
+        return redirect()->route('admin.categories.index')->with('success', 'Category created successfully.');
     }
 
     /**

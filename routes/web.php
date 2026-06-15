@@ -68,7 +68,9 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 /*
-admin routes
+    Admin routes
 */
-
-Route::resource('admin/categories', AdminCategoryController::class)->middleware('admin');
+// Resource group that defines all of the CRUD actions/endpoints
+Route::resource('admin/categories', AdminCategoryController::class)
+    ->middleware('auth')
+    ->names("admin.categories");
