@@ -1,6 +1,8 @@
 <?php
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
+use App\http\Controllers\CategoryController;
+use App\http\Controllers\admin\CategoryController as AdminCategoryController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use App\Models\Item;
@@ -64,3 +66,9 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+/*
+admin routes
+*/
+
+Route::resource('admin/categories', AdminCategoryController::class)->middleware('admin');

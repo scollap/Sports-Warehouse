@@ -116,7 +116,9 @@ class EventController extends Controller
 
         $items = Item::where('itemName', 'LIKE', '%' . $search . '%')->paginate($this->perPage($request));
         $category = $items->total() . " Search Results for " . $search;
-        $recentlyViewedItems = Session::get('recently_viewed', []);
+        $recentlyViewed = Session::get('recently_viewed', []);
+        $recentlyViewedItems = Item::whereIn('itemId', $recentlyViewed)
+            ->get();
         return view('product_category', [
             'items' => $items,
             'category' => (object) ['categoryName' => $category],   

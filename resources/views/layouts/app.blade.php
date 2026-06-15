@@ -29,10 +29,11 @@
                         <li class="nav-item"><a class="nav-link" href="{{ route('products.index') }}"><i class="fa-regular fa-circle"></i> View Products</a></li>
                         @auth
                              {{-- have two extra LI so the css styling works correctly  --}}
-                            <li></li><li></li>
                             <li class="nav-item user-item">
                                 @include('layouts.simple-nav')
                             </li>
+                            <li></li>
+                            <li></li>
                         @else
                             <li class="nav-item login-item"><a class="nav-link" href="{{ route('login') }}"><i class="fas fa-lock"></i> Login</a></li>
                             <li class="cart-item"><a class="nav-link" href="{{ route('saved.show') }}"><i class="fas fa-shopping-cart"></i> View Cart</a></li>

@@ -394,6 +394,7 @@ header {
 .categories {
   background: var(--dark-blue);
   padding: 1rem;
+  margin-bottom: 5px;
 }
 
 .categories ul {
@@ -893,6 +894,7 @@ footer .social li {
     color: var(--white);
     transition: transform 0.2s ease, background 0.2s ease;
     cursor: pointer;
+    margin-top: 10px;
 }
 
 .button:hover {
@@ -907,6 +909,7 @@ footer .social li {
   background-color: #00aced;
   color: white;
   cursor: pointer;
+  margin-top: 10px;
 }
 
 .buttonBlue:hover {
@@ -1006,7 +1009,7 @@ footer .social li {
 }
 
 .formDiv {
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 
 .cart-summary {
@@ -1033,6 +1036,7 @@ footer .social li {
   border-radius: 8px;
   margin-right: 10px;
   max-width: 450px;
+  margin-bottom: 20px;
 }
 
 .checkoutDiv h2 {
@@ -1054,6 +1058,14 @@ footer .social li {
 }
 
 .soonDiv {
+    /* background: var(--dark-blue); */
+    color: var(--white);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.soDiv {
     background: var(--dark-blue);
     color: var(--white);
     padding: 20px;

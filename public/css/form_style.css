@@ -113,6 +113,7 @@ button {
   background-color: #00aced;
   color: white;
   cursor: pointer;
+  margin-top: 10px;
 }
 
 button:hover {
