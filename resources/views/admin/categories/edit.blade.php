@@ -1,18 +1,18 @@
 @extends('layouts.app')
 
-@section('title', 'Add New Category')
+@section('title', 'Edit Category')
 
 @section('content')
 <div class="mainRegDiv">
 
-    <h1 class="orange-bar">Add New Category</h1>
+    <h1 class="orange-bar">Edit Category</h1>
 
     <div class="formDiv">
-
-        <form action="{{ route('admin.categories.store') }}"
+        <form action="{{ route('admin.categories.update', $category->categoryId) }}"
               method="POST">
 
             @csrf
+            @method('PUT')
 
             <div>
                 <label class="block font-medium text-sm text-gray-700"
@@ -21,11 +21,11 @@
                 </label>
 
                 <input
-                    type="text"
                     id="categoryName"
                     name="categoryName"
+                    type="text"
                     class="form-input"
-                    value="{{ old('categoryName') }}"
+                    value="{{ old('categoryName', $category->categoryName) }}"
                     required
                 >
 
@@ -36,7 +36,7 @@
 
             <div class="flex items-center gap-4 mt-5">
                 <button type="submit" class="buttonBlue">
-                    Add Category
+                    Update Category
                 </button>
 
                 <a href="{{ route('admin.categories.index') }}"
@@ -46,7 +46,6 @@
             </div>
 
         </form>
-
     </div>
 
 </div>

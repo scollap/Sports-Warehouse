@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Item;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -54,7 +55,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
@@ -62,7 +63,11 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $validated = $request->validate([
+            'categoryName' => 'required|unique:category,categoryName|String|min:2|max:50'
+        ]);
+        $category->update($validated);
+        return redirect()->route('admin.categories.index')->with('success', 'Category updated successfully.');
     }
 
     /**
@@ -70,6 +75,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        if (Item::where('categoryId', $category->categoryId)->exists()) {
+            return redirect()->route('admin.categories.index')->with('error', 'Cannot delete category with associated items.');
+        }
+        $category->delete();
+        return redirect()->route('admin.categories.index')->with('success', 'Category deleted successfully.');
     }
 }

@@ -887,7 +887,8 @@ footer .social li {
 
 .button {
     display: inline-block;
-    padding: 0.23em 0.7em;
+    padding: 0.4em 0.8em; 
+    line-height: 1.15;
     border-radius: 6px;
     text-decoration: none;
     background: var(--orange);
@@ -904,6 +905,7 @@ footer .social li {
 .buttonBlue {
   display: inline-block;
   padding: 0.4em 0.8em;
+  line-height: 1.15;
   border: none;
   border-radius: 5px;
   background-color: #00aced;
@@ -1192,4 +1194,50 @@ legend {
 .user-dropdown button:hover {
     background: var(--light-blue);
     color: var(--white);
+}
+
+/* style for admin pages */
+
+.adminTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.adminTable th {
+    text-align: left;
+    padding: 12px;
+    background: #f4f4f4;
+    border-bottom: 2px solid #ddd;
+}
+
+.adminTable td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.adminTable tr:hover {
+    background: #fafafa;
+}
+
+.actions-column {
+    width: 180px;
+}
+
+.actions-cell {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.inline-form {
+    display: inline;
+}
+
+.button-small {
+    padding: 8px 12px;
+    font-size: 0.875rem;
+}
+
+.mb-4 {
+    margin-bottom: 1rem;
 }
