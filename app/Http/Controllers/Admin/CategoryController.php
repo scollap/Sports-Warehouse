@@ -8,7 +8,7 @@ use App\Models\Item;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
-{
+{ 
     /**
      * Display a listing of the resource.
      */
@@ -25,8 +25,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
-        return view('admin.categories.create');
+        $categories = Category::pluck('categoryName', 'categoryId')->toArray();
+        return view('admin.categories.create', compact('categories'));
     }
 
     /**
@@ -34,7 +34,6 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
         $validated = $request->validate([
             'categoryName' => 'required|unique:category,categoryName|String|min:2|max:50'
         ]);
@@ -55,7 +54,8 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('admin.categories.edit', compact('category'));
+        $categories = Category::pluck('categoryName', 'categoryId')->toArray();
+        return view('admin.categories.edit', compact('category', 'categories'));
     }
 
     /**

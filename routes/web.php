@@ -3,6 +3,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
 use App\http\Controllers\CategoryController;
 use App\http\Controllers\admin\CategoryController as AdminCategoryController;
+use App\http\Controllers\admin\ItemController as adminItemController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use App\Models\Item;
@@ -74,3 +75,7 @@ require __DIR__.'/auth.php';
 Route::resource('admin/categories', AdminCategoryController::class)
     ->middleware('auth')
     ->names("admin.categories");
+
+Route::resource('admin/items', AdminItemController::class)
+    ->middleware('auth')
+    ->names("admin.items");

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Item;
 use Illuminate\Http\Request;
+use App\Models\Category;
 
 class ItemController extends Controller
 {
@@ -13,7 +14,9 @@ class ItemController extends Controller
      */
     public function index()
     {
-        //
+        $items = Item::all();
+        $categories = Category::pluck('categoryName', 'categoryId')->toArray();
+        return view('admin.items.index', compact('items', 'categories'));
     }
 
     /**
@@ -21,7 +24,8 @@ class ItemController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::pluck('categoryName', 'categoryId')->toArray();
+        return view('admin.items.create', compact('categories'));
     }
 
     /**
@@ -29,7 +33,11 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+        'itemName' => 'required|unique:items,itemName|String|min:2|max:50'
+        ]);
+        Item::create($validated);
+        return redirect()->route('admin.items.index')->with('success', 'Product created successfully.');
     }
 
     /**
@@ -45,7 +53,8 @@ class ItemController extends Controller
      */
     public function edit(Item $item)
     {
-        //
+        $categories = Category::pluck('categoryName', 'categoryId')->toArray();
+        return view('admin.items.edit', compact('item', 'categories'));   
     }
 
     /**
@@ -53,7 +62,11 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-        //
+        $validated = $request->validate([
+            'itemName' => 'required|unique:items,itemName|String|min:2|max:50'
+        ]);
+        $item->update($validated);
+        return redirect()->route('admin.items.index')->with('success', 'Product updated successfully.');
     }
 
     /**
@@ -61,6 +74,7 @@ class ItemController extends Controller
      */
     public function destroy(Item $item)
     {
-        //
+        $item->delete();
+        return redirect()->route('admin.items.index')->with('success', 'Product deleted successfully.');
     }
 }
