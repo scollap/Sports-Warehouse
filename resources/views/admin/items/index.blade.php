@@ -27,7 +27,7 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Category Name</th>
+                        <th>Product Name</th>
                         <th class="actions-column">Actions</th>
                     </tr>
                 </thead>
@@ -67,6 +67,10 @@
                 </tbody>
 
             </table>
+
+            <div class="flex justify-center mt-8">
+                {{ $items->links() }}
+            </div>
 
         @endif
 
