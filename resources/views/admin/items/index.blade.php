@@ -35,7 +35,13 @@
                 <tbody>
                     @foreach ($items as $item)
                         <tr>
-                            <td>{{ $item->itemId }}</td>
+                            <td class="product-cell">
+                                {{ $item->itemId }}
+                                <img
+                                    src="{{ $item->photo ? asset('images/product/' . $item->photo) : asset('images/placeholder.png') }}"
+                                    alt="{{ $item->itemName }}"
+                                    class="product-thumb">
+                            </td>
                             <td>{{ $item->itemName }}</td>
 
                             <td class="actions-cell">

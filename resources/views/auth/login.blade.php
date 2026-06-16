@@ -16,7 +16,7 @@
         <div class="formDiv">
 
             <h2>Login 💬</h2>
-            <p>Please enter your email and password to continue.</p>
+            <p>Please enter your username and password to continue.</p>
 
             <x-auth-session-status class="mb-4" :status="session('status')" />
 
@@ -26,9 +26,9 @@
                 <fieldset>
                     <legend>Sports Warehouse Login</legend>
                     <div class="form-row">
-                        <label for="email">Email*:</label>
-                        <input class="form-input" id="email" type="email" name="email" value="{{ old('email') }}" required autofocus>
-                        @error('email')
+                        <label for="name">Username*:</label>
+                        <input class="form-input" id="name" type="text" name="name" value="{{ old('name') }}" required autofocus>
+                        @error('name')
                             <span class="error-message">{{ $message }}</span>
                         @enderror
                     </div>

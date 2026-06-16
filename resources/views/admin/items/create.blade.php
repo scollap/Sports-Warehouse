@@ -23,7 +23,8 @@
 
         <div class="item-details__image">
 
-            <img src="{{ asset('images/placeholder.png') }}"
+            <img id="imagePreview"
+                 src="{{ asset('images/placeholder.png') }}"
                  alt="No Image Available">
 
             <label for="photo">
@@ -163,3 +164,18 @@
 </form>
 
 @endsection
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const photoInput = document.getElementById('photo');
+    const preview = document.getElementById('imagePreview');
+
+    photoInput.addEventListener('change', function () {
+        const file = this.files[0];
+
+        if (file) {
+            preview.src = URL.createObjectURL(file);
+        }
+    });
+});
+</script>

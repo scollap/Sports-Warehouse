@@ -7,7 +7,12 @@
         <a href="{{ route('profile.edit') }}">
             <i class="fas fa-user"></i> Profile
         </a>
-
+        <a href="{{ route('admin.categories.index') }}">
+            <i class="fas fa-list"></i> Categories
+        </a>
+        <a href="{{ route('admin.items.index') }}">
+            <i class="fas fa-box"></i> Products
+        </a>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit">

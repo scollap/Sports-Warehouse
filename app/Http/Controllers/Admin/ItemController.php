@@ -31,14 +31,35 @@ class ItemController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-        'itemName' => 'required|unique:items,itemName|String|min:2|max:50'
-        ]);
-        Item::create($validated);
-        return redirect()->route('admin.items.index')->with('success', 'Product created successfully.');
+public function store(Request $request)
+{
+    $validated = $request->validate([
+        'itemName' => 'required|string|min:2|max:150|unique:item,itemName',
+        'price' => 'required|numeric|min:0',
+        'salePrice' => 'nullable|numeric|min:0',
+        'description' => 'nullable|string|max:2000',
+        'categoryId' => 'required|exists:category,categoryId',
+        'photo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+    ]);
+
+    if ($request->hasFile('photo')) {
+        $file = $request->file('photo');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $file->move(
+            public_path('images/product'),
+            $filename
+        );
+        $validated['photo'] = $filename;
     }
+
+    $validated['featured'] = $request->has('featured');
+
+    Item::create($validated);
+
+    return redirect()
+        ->route('admin.items.index')
+        ->with('success', 'Product created successfully.');
+}
 
     /**
      * Display the specified resource.
@@ -63,10 +84,30 @@ class ItemController extends Controller
     public function update(Request $request, Item $item)
     {
         $validated = $request->validate([
-            'itemName' => 'required|unique:items,itemName|String|min:2|max:50'
+            'itemName' => 'required|string|min:2|max:150|unique:item,itemName,' . $item->itemId . ',itemId',
+            'price' => 'required|numeric|min:0',
+            'salePrice' => 'nullable|numeric|min:0',
+            'description' => 'nullable|string|max:2000',
+            'categoryId' => 'required|exists:category,categoryId',
+            'photo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(
+                public_path('images/product'),
+                $filename
+            );
+            $validated['photo'] = $filename;
+        }
+
+        $validated['featured'] = $request->has('featured');
         $item->update($validated);
-        return redirect()->route('admin.items.index')->with('success', 'Product updated successfully.');
+
+        return redirect()
+            ->route('admin.items.index')
+            ->with('success', 'Product updated successfully.');
     }
 
     /**
