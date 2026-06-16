@@ -17,6 +17,9 @@ class Order extends Model
         'customer_email',
         'comments',
         'address',
+        'card_name',
+        'card_number',
+        'card_expiry',
     ];
 
     protected $casts = [

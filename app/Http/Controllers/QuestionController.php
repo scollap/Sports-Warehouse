@@ -8,29 +8,15 @@ use GuzzleHttp\Client;
 
 class QuestionController extends Controller
 {
-     
-    private $categories = [
-        1 => 'Shoes',
-        2 => 'Helmets',
-        3 => 'Pants',
-        4 => 'Tops',
-        5 => 'Balls',
-        6 => 'Equipment',
-        7 => 'Training gear',
-    ];
-
-
-
     public function index(){
-    return view('register', [
-        'categories' => $this->categories,
-    ]);
+        // Get categories for the menu manually
+        $categories = \App\Models\Category::pluck('categoryName', 'categoryId')->toArray();
+        return view('contact.index', compact('categories'));
     }
-
-    
 
     public function submit(Request $request)
     {
+        // Validate the question form
         $validated = $request->validate([
             'firstName' => 'required|min:2',
             'lastName'  => 'required|min:2|max:50',
@@ -42,7 +28,7 @@ class QuestionController extends Controller
             'comments'  => 'nullable',
         ]);
 
-    //send email
+    // Send the email using Resend
     try {
 
         $resend = Resend::client(env('RESEND_API_KEY'),);
@@ -78,8 +64,7 @@ class QuestionController extends Controller
 
     } catch (\Exception $e) {
 
-        // dd($e->getMessage()); //just to debug and see the error
-
+        // Return with error if email fails
         return back()
             ->withErrors([
                 'email' => 'Unable to send email right now.'
@@ -87,9 +72,8 @@ class QuestionController extends Controller
             ->withInput();
     }
 
-        return view('registerConfirmation', array_merge(
-            $validated,
-            ['categories' => $this->categories]
-        ));
+        // Get categories again for the confirmation page
+        $categories = \App\Models\Category::pluck('categoryName', 'categoryId')->toArray();
+        return view('contact.confirmation', array_merge($validated, ['categories' => $categories]));
     }
 }

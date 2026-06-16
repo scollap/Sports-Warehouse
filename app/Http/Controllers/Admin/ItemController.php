@@ -14,8 +14,11 @@ class ItemController extends Controller
      */
     public function index()
     {
+        // Get all items and paginate them
         $items = Item::paginate(10);
-        return view('admin.items.index', compact('items'));
+        // Get categories for the sidebar/menu
+        $categories = Category::pluck('categoryName', 'categoryId')->toArray();
+        return view('admin.items.index', compact('items', 'categories'));
     }
 
     /**
@@ -23,7 +26,9 @@ class ItemController extends Controller
      */
     public function create()
     {
-        return view('admin.items.create');
+        // Get categories for the menu and dropdown
+        $categories = Category::pluck('categoryName', 'categoryId')->toArray();
+        return view('admin.items.create', compact('categories'));
     }
 
     /**
@@ -31,6 +36,7 @@ class ItemController extends Controller
      */
 public function store(Request $request)
 {
+    // Validate the form data
     $validated = $request->validate([
         'itemName' => 'required|string|min:2|max:150|unique:item,itemName',
         'price' => 'required|numeric|min:0',
@@ -40,6 +46,7 @@ public function store(Request $request)
         'photo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
     ]);
 
+    // Check if there is an image to upload
     if ($request->hasFile('photo')) {
         $file = $request->file('photo');
         $filename = time() . '_' . $file->getClientOriginalName();
@@ -72,7 +79,9 @@ public function store(Request $request)
      */
     public function edit(Item $item)
     {
-        return view('admin.items.edit', compact('item'));   
+        // Pass categories for the menu and form
+        $categories = Category::pluck('categoryName', 'categoryId')->toArray();
+        return view('admin.items.edit', compact('item', 'categories'));   
     }
 
     /**

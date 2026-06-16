@@ -4,7 +4,11 @@
     @foreach($items as $item)
         <a href="{{ route('product.show', $item->itemId) }}" class="item-link">
             <article>
-                <img src="{{ asset('images/product/' . $item->photo) }}" alt="{{ $item->itemName }}">
+                @if($item->photo)
+                    <img src="{{ asset('images/product/' . $item->photo) }}" alt="{{ $item->itemName }}">
+                @else
+                    <img src="{{ asset('images/placeholder.png') }}" alt="Placeholder">
+                @endif
                 <div>
                     @if($item->salePrice)
                         <p class="price orange">

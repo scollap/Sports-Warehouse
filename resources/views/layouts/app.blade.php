@@ -25,7 +25,7 @@
                         <li class="menu-text"><a href="#" id="toggleTxt">Menu</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('home') }}"><i class="fa-regular fa-circle"></i> Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="#"><i class="fa-regular fa-circle"></i> About SW</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('register.index') }}"><i class="fa-regular fa-circle"></i> Contact Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('contact.index') }}"><i class="fa-regular fa-circle"></i> Contact Us</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('products.index') }}"><i class="fa-regular fa-circle"></i> View Products</a></li>
                         @auth
                              {{-- have two extra LI so the css styling works correctly  --}}
@@ -36,8 +36,8 @@
                             <li></li>
                         @else
                             <li class="nav-item login-item"><a class="nav-link" href="{{ route('login') }}"><i class="fas fa-lock"></i> Login</a></li>
-                            <li class="cart-item"><a class="nav-link" href="{{ route('saved.show') }}"><i class="fas fa-shopping-cart"></i> View Cart</a></li>
-                            <li class="items-count"><span onclick="window.location='{{ route('saved.show') }}'" role="link" style="cursor: pointer;">{{ count(session('saved_items', [])) }} Items</span></li>
+                            <li class="cart-item"><a class="nav-link" href="{{ route('cart.index') }}"><i class="fas fa-shopping-cart"></i> View Cart</a></li>
+                            <li class="items-count"><span onclick="window.location='{{ route('cart.index') }}'" role="link" style="cursor: pointer;">{{ count(session('saved_items', [])) }} Items</span></li>
                         @endauth
                     </ul>
                 </nav>
@@ -61,7 +61,7 @@
                     <ul>
                         <li><a href="{{ route('home') }}">Home</a></li>
                         <li><a href="#">About SW</a></li>
-                        <li><a href="{{ route('register.index') }}">Contact US</a></li>
+                        <li><a href="{{ route('contact.index') }}">Contact US</a></li>
                         {{-- make view producs link to rout that displays all products --}}
                         <li><a href="{{ route('products.index') }}">View products</a></li>
                         <li><a href="#">Privacy policy</a></li>

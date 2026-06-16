@@ -5,12 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Item;
+use App\Models\Order;
 use Illuminate\Support\Facades\Session;
 
 
 class EventController extends Controller
 {
-
+    // Function to get the categories for the menu
+    private function getCategories()
+    {
+        return Category::pluck('categoryName', 'categoryId')->toArray();
+    }
 
     public function featured(Request $request)
     {
@@ -23,50 +28,50 @@ class EventController extends Controller
     }
 
 
-    //functions to handle the routes
+    // Functions for the routes
     public function index(Request $request){
         $category = "Featured Products";
         $recentlyViewed = Session::get('recently_viewed', []);
         $recentlyViewedItems = Item::whereIn('itemId', $recentlyViewed)
             ->get();
-        return view('index', [
+        return view('pages.home', [
             'items' => $this->featured(request()),
             'category' => $category,
+            'categories' => $this->getCategories(), // Pass categories manually
             'perPage' => $this->perPage($request),
             'recentlyViewed' => $recentlyViewedItems,
         ]);
     }
 
     public function products(Request $request){
-    //display all products on this page with category as "All Products"
+        // Display all products
         $items = Item::paginate($this->perPage($request));
         $category = (object) ['categoryName' => "All Products"];
         $recentlyViewed = Session::get('recently_viewed', []);
         $recentlyViewedItems = Item::whereIn('itemId', $recentlyViewed)
             ->get();
-        return view('product_category', [
+        return view('products.index', [
             'items' => $items,
             'category' => $category,
+            'categories' => $this->getCategories(),
             'perPage' => $this->perPage($request),
             'recentlyViewed' => $recentlyViewedItems,
         ]);
     }
 
     public function show(Request $request,$id){
-
+        // Show products in a specific category
         $items = Item::where('categoryId', $id)->paginate($this->perPage(request()));
-
         $category = Category::find($id);
-        // use the below if I want to use the 404.blade.php page 
-        // if (!$item) {
-        //     abort(404);
-        // }
+
         $recentlyViewed = Session::get('recently_viewed', []);
         $recentlyViewedItems = Item::whereIn('itemId', $recentlyViewed)
             ->get();
-        return view('product_category', [
+
+        return view('products.index', [
             'items' => $items,
             'category' => $category,
+            'categories' => $this->getCategories(),
             'perPage' => $this->perPage($request),
             'recentlyViewed' => $recentlyViewedItems,
         ]);
@@ -74,30 +79,25 @@ class EventController extends Controller
 
     public function item($id)
     {
-
+        // Show details for one item
         $item = Item::findOrFail($id);
-         // add section to add item to recentlyviewed settion data
+
         $recentlyViewed = Session::get('recently_viewed', []);
         $recentlyViewed = array_diff($recentlyViewed, [$id]);
         array_unshift($recentlyViewed, $id);
-        Session::put('recently_viewed', array_slice($recentlyViewed, 0, 5)); // Keep only the last 5 items
+        Session::put('recently_viewed', array_slice($recentlyViewed, 0, 5));
 
-        // Fetch the full item objects for recently viewed items
-        $recentlyViewed = array_slice(array_values($recentlyViewed), 0, 5); 
-        Session::put('recently_viewed', $recentlyViewed);
-        $recentlyViewedItems = Item::whereIn('itemId', $recentlyViewed)
-        ->get();
-        return view('item_details', [
+        $recentlyViewedItems = Item::whereIn('itemId', $recentlyViewed)->get();
+
+        return view('products.show', [
             'item' => $item,
+            'categories' => $this->getCategories(),
             'recentlyViewed' => $recentlyViewedItems,
         ]);
     }
 
-    // Display items from search results
     public function search(Request $request){
         $search = $request->search;
-
-
         $items = Item::where('itemName', 'LIKE', '%' . $search . '%')->paginate($this->perPage($request));
         
         $category = (object) [
@@ -105,16 +105,125 @@ class EventController extends Controller
         ];
 
         $recentlyViewed = Session::get('recently_viewed', []);
-        $recentlyViewedItems = Item::whereIn('itemId', $recentlyViewed)
-            ->get();
-        return view('product_category', [
+        $recentlyViewedItems = Item::whereIn('itemId', $recentlyViewed)->get();
+
+        return view('products.index', [
             'items' => $items,
             'category' => $category,   
+            'categories' => $this->getCategories(),
             'perPage' => $this->perPage($request),
             'recentlyViewed' => $recentlyViewedItems,
         ]);
     }
 
+    // CART FUNCTIONS
+    public function showCart()
+    {
+        $savedItems = Session::get('saved_items', []);
+        $items = Item::whereIn('itemId', $savedItems)->get();
+
+        return view('cart.index', [
+            'items' => $items,
+            'categories' => $this->getCategories(),
+        ]);
+    }
+
+    public function addToCart(int $id)
+    {
+        $item = Item::findOrFail($id);
+        $savedItems = Session::get('saved_items', []);
+
+        if (!in_array($id, $savedItems)) {
+            $savedItems[] = $id;
+        }
+
+        Session::put('saved_items', $savedItems);
+        return redirect()->route('cart.index')->with('message', 'Item added to cart!');
+    }
+
+    public function removeFromCart($id)
+    {
+        $savedItems = Session::get('saved_items', []);
+        $savedItems = array_diff($savedItems, [$id]);
+        Session::put('saved_items', $savedItems);
+
+        return redirect()->back()->with('message', 'Item removed from cart!');
+    }
+
+    // CHECKOUT FUNCTIONS
+    public function showCheckout()
+    {
+        $savedItemsIds = Session::get('saved_items', []);
+        $items = Item::whereIn('itemId', $savedItemsIds)->get();
+        
+        return view('checkout.show', [
+            'items' => $items,
+            'categories' => $this->getCategories(),
+        ]);
+    }
+
+    public function processCheckout(Request $request)
+    {
+        // Validation for the form fields
+        $validatedData = $request->validate([
+            'customer_firstname' => 'required|string|min:3',
+            'customer_lastname' => 'required|string|min:3',
+            'customer_phone' => 'required|string|min:8',
+            'customer_email' => 'required|email',
+            'customer_address' => 'required|string|min:5',
+            'customer_comment' => 'nullable',
+            'card_name' => 'required|string|min:3',
+            'card_number' => 'required|string|size:16',
+            'card_expiry' => 'required|string|regex:/^[0-9]{2}\/[0-9]{2}$/',
+        ]);
+
+        $savedItems = Session::get('saved_items', []);
+        if (empty($savedItems)) {
+            return redirect('/')->with('error', 'Your cart is empty');
+        }
+        
+        $totalPrice = 0;
+        foreach ($savedItems as $itemId) {
+            $item = Item::find($itemId);
+            if ($item) {
+                $totalPrice += $item->price;
+            }
+        }
+        // Mask card number before saving
+$cardNumber = preg_replace('/\D/', '', $validatedData['card_number']);
+
+$maskedCardNumber = '**** **** **** ' . substr($cardNumber, -4);
+
+        // Create the order in the database
+        $order = Order::create([
+            'customer_firstname' => $validatedData['customer_firstname'],
+            'customer_lastname' => $validatedData['customer_lastname'],
+            'customer_phone' => $validatedData['customer_phone'],
+            'customer_email' => $validatedData['customer_email'],
+            'address' => $validatedData['customer_address'],
+            'comments' => $validatedData['customer_comment'],
+            'total_price' => $totalPrice,
+            'card_name' => $validatedData['card_name'],
+            'card_number' => $maskedCardNumber,
+            'card_expiry' => $validatedData['card_expiry'],
+        ]);
+        
+        // Save the items for this order
+        foreach ($savedItems as $itemId) {
+            $item = Item::find($itemId);
+            if ($item) {
+                $order->orderItems()->create([
+                    'item_id' => $itemId,
+                    'quantity' => 1,
+                    'price' => $item->price,
+                ]);
+            }
+        }
+
+        Session::forget('saved_items');
+
+        return redirect('/')->with('success', 'Checkout successful! Your order number is: #' . $order->id);
+    }
 }
 
 //Just handy things to rememeber when doing dev work

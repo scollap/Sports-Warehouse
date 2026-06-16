@@ -153,15 +153,61 @@
                             id="customer_comment"
                             name="customer_comment"
                         >{{ old('customer_comment') }}</textarea>
-                    </div>  
-                    <div class="flex justify-between"> 
+                    </div>
+
+                    <fieldset class="mt-8 border-t border-[#00aced] pt-4">
+                        <legend>Payment Details 💳</legend>
+
                         <div class="form-row">
-                            <a href="{{ route('saved.show') }}" class="button">
+                            <label for="card_name">Name on Card*</label>
+                            <input
+                                class="form-input"
+                                type="text"
+                                id="card_name"
+                                name="card_name"
+                                value="{{ old('card_name') }}"
+                                required
+                            >
+                            <span id="card_name_error" class="error-message hidden">Please enter the name on the card.</span>
+                        </div>
+
+                        <div class="form-row">
+                            <label for="card_number">Credit Card Number*</label>
+                            <input
+                                class="form-input"
+                                type="text"
+                                id="card_number"
+                                name="card_number"
+                                placeholder="16 digit card number"
+                                maxlength="16"
+                                required
+                            >
+                            <span id="card_number_error" class="error-message hidden">Please enter a valid 16-digit card number.</span>
+                        </div>
+
+                        <div class="form-row">
+                            <label for="card_expiry">Expiry Date* (MM/YY)</label>
+                            <input
+                                class="form-input"
+                                type="text"
+                                id="card_expiry"
+                                name="card_expiry"
+                                placeholder="MM/YY"
+                                maxlength="5"
+                                required
+                            >
+                            <span id="card_expiry_error" class="error-message hidden">Please enter a valid expiry date (MM/YY).</span>
+                        </div>
+                    </fieldset>
+
+                    <div class="flex justify-between mt-6"> 
+                        <div class="form-row">
+                            <a href="{{ route('cart.index') }}" class="button">
                                 Return to cart
                             </a>
                         </div>
                         <div class="form-row">
-                            <button type="submit">
+                            <button type="submit" id="checkout-submit">
                                 Checkout
                             </button>
                         </div>
@@ -171,5 +217,44 @@
         </div>
 
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form[action="/checkout"]');
+            const submitBtn = document.getElementById('checkout-submit');
+
+            form.addEventListener('submit', function(e) {
+                let isValid = true;
+
+                // Reset errors
+                document.querySelectorAll('.error-message').forEach(el => el.classList.add('hidden'));
+
+                // Simple Client-side validation
+                const cardName = document.getElementById('card_name');
+                const cardNumber = document.getElementById('card_number');
+                const cardExpiry = document.getElementById('card_expiry');
+
+                if (cardName.value.trim().length < 3) {
+                    document.getElementById('card_name_error').classList.remove('hidden');
+                    isValid = false;
+                }
+
+                if (!/^\d{16}$/.test(cardNumber.value.replace(/\s/g, ''))) {
+                    document.getElementById('card_number_error').classList.remove('hidden');
+                    isValid = false;
+                }
+
+                if (!/^\d{2}\/\d{2}$/.test(cardExpiry.value)) {
+                    document.getElementById('card_expiry_error').classList.remove('hidden');
+                    isValid = false;
+                }
+
+                if (!isValid) {
+                    e.preventDefault();
+                    alert('Please fix the errors in the payment section before proceeding.');
+                }
+            });
+        });
+    </script>
 
 @endsection

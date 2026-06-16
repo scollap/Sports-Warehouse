@@ -16,7 +16,11 @@
 
     <section class="item-details">
         <div class="item-details__image">
-            <img src="{{ asset('images/product/' . $item->photo) }}" alt="{{ $item->itemName }}">
+            @if($item->photo)
+                    <img src="{{ asset('images/product/' . $item->photo) }}" alt="{{ $item->itemName }}">
+                @else
+                    <img src="{{ asset('images/placeholder.png') }}" alt="Placeholder">
+                @endif
         </div>
         <div class="item-details__content">
 

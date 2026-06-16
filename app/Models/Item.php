@@ -44,35 +44,32 @@ class Item extends Model
     /**
      * Get the image URL for the item.
      *
-     * @return Attribute
+     * @return string
      */
-    public function imageUrl(): Attribute
+    public function getImageUrlAttribute()
     {
-        return Attribute::get(function () {
-            if ($this->photo) {
-                // Check public/images/product first as used in Admin/ItemController
-                if (File::exists(public_path('images/product/' . $this->photo))) {
-                    return asset('images/product/' . $this->photo);
-                }
-                // Fallback to storage/
-                if (File::exists(storage_path('app/public/' . $this->photo))) {
-                    return asset('storage/' . $this->photo);
-                }
+        if ($this->photo) {
+            // Check public/images/product first
+            if (File::exists(public_path('images/product/' . $this->photo))) {
+                return asset('images/product/' . $this->photo);
             }
-            return asset('images/placeholder.png');
-        });
+            // Check in storage
+            if (File::exists(storage_path('app/public/' . $this->photo))) {
+                return asset('storage/' . $this->photo);
+            }
+        }
+        // Return placeholder if no image
+        return asset('images/placeholder.png');
     }
 
     /**
-     * Undocumented function
+     * Check if item is in the cart
      *
-     * @return Attribute
+     * @return bool
      */
-    protected function isSaved(): Attribute
+    public function getIsSavedAttribute()
     {
-        return Attribute::get(function () {
-            $savedItems = Session::get('saved_items', []);
-            return in_array($this->itemId, $savedItems);
-        });
+        $savedItems = Session::get('saved_items', []);
+        return in_array($this->itemId, $savedItems);
     }
 }

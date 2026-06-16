@@ -34,7 +34,7 @@
             </div>
         @endif
 
-        <form action="{{ route('register.submit') }}" method="POST" novalidate>
+        <form action="{{ route('contact.submit') }}" method="POST" novalidate>
 
             @csrf
 
