@@ -1,13 +1,16 @@
 <?php
+
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
-use App\http\Controllers\CategoryController;
-use App\http\Controllers\admin\CategoryController as AdminCategoryController;
-use App\http\Controllers\admin\ItemController as adminItemController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\ItemController as AdminItemController;
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session;
-use App\Models\Item;
 use App\Models\Category;
+use App\Models\Item;
 
 Route::get('/', [EventController::class, 'index'])
     ->name('home');
@@ -21,40 +24,29 @@ Route::get('/product/{id}', [EventController::class, 'item'])
 Route::get('/search', [EventController::class, 'search'])
     ->name('search');
 
-use App\Http\Controllers\QuestionController;
-
 Route::get('/question', [QuestionController::class, 'index'])
     ->name('register.index');
 
 Route::post('/question', [QuestionController::class, 'submit'])
     ->name('register.submit');
 
-    //products.index to display all products using the product_category page
+// Route to display all products
 Route::get('/products', [EventController::class, 'products'])
     ->name('products.index');
 
-//route to add to cart
-Route::post('/cart/add/{id}', [EventController::class, 'save'])
-     ->name('cart.add');
+// Cart routes
+Route::prefix('cart')->group(function () {
+    Route::get('/', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/add/{id}', [CartController::class, 'add'])->name('cart.add');
+    Route::post('/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+});
 
-Route::get('/products/saved', [EventController::class, 'showSaved'])
-    ->name('saved.show');
+// Legacy saved route alias
+Route::get('/products/saved', [CartController::class, 'index'])->name('saved.show');
 
-Route::post('/cart/remove/{id}', [EventController::class, 'deleteSaved'])
-    ->name('cart.remove');
-
-Route::get('/checkout', function () {
-        $category = Category::pluck('categoryName', 'categoryId')->toArray();
-        $savedItemsIds = Session::get('saved_items', []);
-        $items = Item::whereIn('itemId', $savedItemsIds)->get();
-        return view('registration.checkout', [
-            'items' => $items, 
-            'categories' => $category,
-        ],);
-    })->name('items.checkout_form');
-
-Route::post('/checkout', [EventController::class, 'checkout'])
-    ->name('items.checkout');
+// Checkout routes
+Route::get('/checkout', [CheckoutController::class, 'show'])->name('items.checkout_form');
+Route::post('/checkout', [CheckoutController::class, 'store'])->name('items.checkout');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

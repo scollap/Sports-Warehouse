@@ -16,8 +16,7 @@ class CategoryController extends Controller
     {
         //Display a listing of the resource.
         $categoryList = Category::all();
-        $categories = Category::pluck('categoryName', 'categoryId')->toArray();
-        return view('admin.categories.index', compact('categories', 'categoryList'));
+        return view('admin.categories.index', compact('categoryList'));
     }
 
     /**
@@ -25,8 +24,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::pluck('categoryName', 'categoryId')->toArray();
-        return view('admin.categories.create', compact('categories'));
+        return view('admin.categories.create');
     }
 
     /**
@@ -54,8 +52,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        $categories = Category::pluck('categoryName', 'categoryId')->toArray();
-        return view('admin.categories.edit', compact('category', 'categories'));
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**

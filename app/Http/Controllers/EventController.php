@@ -6,23 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Item;
 use Illuminate\Support\Facades\Session;
-use App\Models\Orders;
-use App\Models\OrderItems;
 
 
 class EventController extends Controller
 {
 
-
-    private function getCategories()
-    {
-        return Category::pluck('categoryName', 'categoryId')->toArray();
-    }
-
-    private function getItems()
-    {
-        return Item::all();
-    }
 
     public function featured(Request $request)
     {
@@ -44,7 +32,6 @@ class EventController extends Controller
         return view('index', [
             'items' => $this->featured(request()),
             'category' => $category,
-            'categories' => $this->getCategories(),
             'perPage' => $this->perPage($request),
             'recentlyViewed' => $recentlyViewedItems,
         ]);
@@ -60,7 +47,6 @@ class EventController extends Controller
         return view('product_category', [
             'items' => $items,
             'category' => $category,
-            'categories' => $this->getCategories(),
             'perPage' => $this->perPage($request),
             'recentlyViewed' => $recentlyViewedItems,
         ]);
@@ -81,7 +67,6 @@ class EventController extends Controller
         return view('product_category', [
             'items' => $items,
             'category' => $category,
-            'categories' => $this->getCategories(),
             'perPage' => $this->perPage($request),
             'recentlyViewed' => $recentlyViewedItems,
         ]);
@@ -104,7 +89,6 @@ class EventController extends Controller
         ->get();
         return view('item_details', [
             'item' => $item,
-            'categories' => $this->getCategories(),
             'recentlyViewed' => $recentlyViewedItems,
         ]);
     }
@@ -115,115 +99,20 @@ class EventController extends Controller
 
 
         $items = Item::where('itemName', 'LIKE', '%' . $search . '%')->paginate($this->perPage($request));
-        $category = $items->total() . " Search Results for " . $search;
+        
+        $category = (object) [
+            'categoryName' => $items->total() . " Search Results for " . $search
+        ];
+
         $recentlyViewed = Session::get('recently_viewed', []);
         $recentlyViewedItems = Item::whereIn('itemId', $recentlyViewed)
             ->get();
         return view('product_category', [
             'items' => $items,
-            'category' => (object) ['categoryName' => $category],   
-            'categories' => $this->getCategories(),
+            'category' => $category,   
             'perPage' => $this->perPage($request),
             'recentlyViewed' => $recentlyViewedItems,
         ]);
-    }
-
-    public function save(int $id)
-    {
-        $item = Item::findOrFail($id);
-
-        $savedItems = Session::get('saved_items', []);
-
-        if (!in_array($id, $savedItems)) {
-            $savedItems[] = $id;
-        }
-
-        Session::put('saved_items', $savedItems);
-        return redirect()->route('saved.show')->with('message', 'Item added to cart!');;
-        // return redirect()->back()->with('message', 'Item added to cart!');
-    }
-
-    public function deleteSaved($id)
-    {
-        $savedItems = Session::get('saved_items', []);
-        $savedItems = array_diff($savedItems, [$id]);
-        Session::put('saved_items', $savedItems);
-
-        return redirect()->back()->with('message', 'Item removed from cart!');
-    }
-
-    public function showSaved()
-    {
-        $savedItems = Session::get('saved_items', []);
-        $items = Item::whereIn('itemId', $savedItems)->get();
-
-        return view('saved', [
-            'items' => $items,
-            'categories' => Category::pluck('categoryName', 'categoryId')->toArray(),
-        ]);
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function checkout(Request $request)
-    {
-        //validat user detials
-        $validatedData = $request->validate([
-            'customer_firstname' => 'required|string|min:3|max:255',
-            'customer_lastname' => 'required|string|min:3|max:255',
-            'customer_phone' => 'required|string|min:8',
-            'customer_email' => 'required|email|max:255',
-            'customer_address' => 'required|string|min:5|max:255',
-            'customer_comment' => 'nullable|string|max:500',
-        ]);
-
-        $savedItems = Session::get('saved_items', []);
-        
-        if (empty($savedItems)) {
-            return redirect('/')->with('error', 'Your cart is empty');
-        }
-        
-        // Calculate total price for all items
-        $totalPrice = 0;
-        $orderItemsData = [];
-        
-        foreach ($savedItems as $itemId) {
-            $item = Item::find($itemId);
-            if ($item) {
-                $totalPrice += $item->price;
-                $orderItemsData[] = [
-                    'item_id' => $itemId,
-                    'quantity' => 1,
-                    'price' => $item->price,
-                ];
-            }
-        }
-        
-        // Create the order
-        $order = Orders::create([
-            'customer_firstname' => $validatedData['customer_firstname'],
-            'customer_lastname' => $validatedData['customer_lastname'],
-            'customer_phone' => $validatedData['customer_phone'],
-            'customer_email' => $validatedData['customer_email'],
-            'address' => $validatedData['customer_address'],
-            'comments' => $validatedData['customer_comment'],
-            'total_price' => $totalPrice,
-        ]);
-        
-        // Create order items for this order
-        foreach ($orderItemsData as $itemData) {
-            $order->orderItems()->create($itemData);
-        }
-
-        Session::forget('saved_items');
-        //redirect with success message
-        //or  load a "confimation view" with order details
-        //include 'categories' => $this->getCategories(), in the return
-        return redirect('/')->with('success', 'Checkout successful');
     }
 
 }

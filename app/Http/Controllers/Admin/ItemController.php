@@ -14,9 +14,8 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $items = Item::all();
-        $categories = Category::pluck('categoryName', 'categoryId')->toArray();
-        return view('admin.items.index', compact('items', 'categories'));
+        $items = Item::paginate(10);
+        return view('admin.items.index', compact('items'));
     }
 
     /**
@@ -24,8 +23,7 @@ class ItemController extends Controller
      */
     public function create()
     {
-        $categories = Category::pluck('categoryName', 'categoryId')->toArray();
-        return view('admin.items.create', compact('categories'));
+        return view('admin.items.create');
     }
 
     /**
@@ -74,8 +72,7 @@ public function store(Request $request)
      */
     public function edit(Item $item)
     {
-        $categories = Category::pluck('categoryName', 'categoryId')->toArray();
-        return view('admin.items.edit', compact('item', 'categories'));   
+        return view('admin.items.edit', compact('item'));   
     }
 
     /**

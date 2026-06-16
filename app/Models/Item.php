@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Session;
-
-use function PHPUnit\Framework\fileExists;
+use Illuminate\Support\Facades\File;
 
 class Item extends Model
 {
@@ -50,11 +49,17 @@ class Item extends Model
     public function imageUrl(): Attribute
     {
         return Attribute::get(function () {
-        if ($this->photo && fileExists($this->photo)) 
-            {
-                        return asset('storage/' . $this->photo);
-            }  
-        return asset('placeholder.jpg');
+            if ($this->photo) {
+                // Check public/images/product first as used in Admin/ItemController
+                if (File::exists(public_path('images/product/' . $this->photo))) {
+                    return asset('images/product/' . $this->photo);
+                }
+                // Fallback to storage/
+                if (File::exists(storage_path('app/public/' . $this->photo))) {
+                    return asset('storage/' . $this->photo);
+                }
+            }
+            return asset('images/placeholder.png');
         });
     }
 

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Orders extends Model
+class Order extends Model
 {
         protected $table = 'orders';
 
@@ -28,6 +28,6 @@ class Orders extends Model
      */
     public function orderItems(): HasMany
     {
-        return $this->hasMany(OrderItems::class, 'order_id');
+        return $this->hasMany(OrderItem::class, 'order_id');
     }
 }

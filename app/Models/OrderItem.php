@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class OrderItems extends Model
+class OrderItem extends Model
 {
     protected $table = 'order_items';
 
@@ -26,7 +26,7 @@ class OrderItems extends Model
      */
     public function order(): BelongsTo
     {
-        return $this->belongsTo(Orders::class, 'order_id');
+        return $this->belongsTo(Order::class, 'order_id');
     }
 
     /**

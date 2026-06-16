@@ -44,7 +44,7 @@
 </div>
 
 {{-- display recently viewed items --}}
-@include('partials._recentlyVieded')
+@include('partials._recentlyViewed')
             <!-- Brands -->
         @include('partials._brands')
 

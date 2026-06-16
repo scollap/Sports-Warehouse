@@ -44,7 +44,7 @@
 
 
 
-@include('partials._recentlyVieded')
+@include('partials._recentlyViewed')
 
 {{-- add spot to show five recently viewed items
 @include('partials._recently_viewed') --}}
