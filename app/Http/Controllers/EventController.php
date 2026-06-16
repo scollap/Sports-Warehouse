@@ -188,11 +188,11 @@ class EventController extends Controller
             if ($item) {
                 $totalPrice += $item->price;
             }
-        }
+        };
         // Mask card number before saving
 $cardNumber = preg_replace('/\D/', '', $validatedData['card_number']);
 
-$maskedCardNumber = '**** **** **** ' . substr($cardNumber, -4);
+$maskedCardNumber = '************' . substr($cardNumber, -4);
 
         // Create the order in the database
         $order = Order::create([
