@@ -1,52 +1,153 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Product')
+@section('title', 'Edit ' . $item->itemName)
 
 @section('content')
-<div class="mainRegDiv">
 
-    <h1 class="orange-bar">Edit Product</h1>
+@include('partials._Logo_search')
+@include('partials._categories')
 
-    <div class="formDiv">
-        <form action="{{ route('admin.items.update', $item->itemId) }}"
-              method="POST">
+<div class="white-background">
+    <h2 class="orange-bar">
+        Edit Product
+    </h2>
+</div>
 
-            @csrf
-            @method('PUT')
+<form action="{{ route('admin.items.update', $item->itemId) }}"
+      method="POST"
+      enctype="multipart/form-data">
 
-            <div>
-                <label class="block font-medium text-sm text-gray-700"
-                       for="categoryName">
-                    Category Name
-                </label>
+    @csrf
+    @method('PUT')
+
+    <section class="item-details">
+
+        <div class="item-details__image">
+
+            <img src="{{ asset('images/product/' . $item->photo) }}"
+                 alt="{{ $item->itemName }}">
+
+            <label for="photo">
+                Upload New Image
+            </label>
+
+            <input type="file"
+                   id="photo"
+                   name="photo"
+                   class="form-input">
+
+        </div>
+
+        <div class="item-details__content">
+
+            <div class="item-details__header">
+
+                <label for="itemName">Product Name</label>
 
                 <input
-                    id="categoryName"
-                    name="categoryName"
                     type="text"
+                    id="itemName"
+                    name="itemName"
                     class="form-input"
-                    value="{{ old('categoryName', $item->itemName) }}"
-                    required
+                    value="{{ old('itemName', $item->itemName) }}"
                 >
 
-                @error('categoryName')
-                    <p class="text-danger mt-2">{{ $message }}</p>
-                @enderror
             </div>
 
-            <div class="flex items-center gap-4 mt-5">
-                <button type="submit" class="buttonBlue">
+            <div class="item-details__pricing">
+
+                <div>
+                    <label for="price">Price</label>
+
+                    <input
+                        type="number"
+                        step="0.01"
+                        id="price"
+                        name="price"
+                        class="form-input"
+                        value="{{ old('price', $item->price) }}"
+                    >
+                </div>
+
+                <div>
+                    <label for="salePrice">Sale Price</label>
+
+                    <input
+                        type="number"
+                        step="0.01"
+                        id="salePrice"
+                        name="salePrice"
+                        class="form-input"
+                        value="{{ old('salePrice', $item->salePrice) }}"
+                    >
+                </div>
+
+            </div>
+
+            <div class="item-details__description">
+
+                <h3>Description</h3>
+
+                <textarea
+                    id="description"
+                    name="description"
+                    class="form-input"
+                    rows="6"
+                >{{ old('description', $item->description) }}</textarea>
+
+            </div>
+
+            <div class="item-details__description">
+
+                <h3>Category</h3>
+
+                <select
+                    id="categoryId"
+                    name="categoryId"
+                    class="form-input">
+
+                    @foreach($categories as $id => $name)
+                        <option value="{{ $id }}"
+                            {{ old('categoryId', $item->categoryId) == $id ? 'selected' : '' }}>
+                            {{ $name }}
+                        </option>
+                    @endforeach
+
+                </select>
+
+            </div>
+
+            <div class="item-details__description">
+
+                <label>
+                    <input
+                        type="checkbox"
+                        name="featured"
+                        value="1"
+                        {{ old('featured', $item->featured) ? 'checked' : '' }}>
+                    Featured Product
+                </label>
+
+            </div>
+
+            <div class="item-details__actions">
+
+                <a href="{{ route('admin.items.index') }}"
+                   class="button button-secondary">
+                    Cancel
+                </a>
+
+                <button type="submit"
+                        class="button button-primary cursor-pointer">
                     Update Product
                 </button>
 
-                <a href="{{ route('admin.items.index') }}"
-                   class="button">
-                    Cancel
-                </a>
             </div>
 
-        </form>
-    </div>
+        </div>
 
-</div>
+    </section>
+
+</form>
+
 @endsection

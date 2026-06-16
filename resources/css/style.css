@@ -1241,3 +1241,24 @@ legend {
 .mb-4 {
     margin-bottom: 1rem;
 }
+
+.item-details input.form-input,
+.item-details select.form-input,
+.item-details textarea.form-input {
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.item-details__pricing {
+    display: flex;
+    gap: 20px;
+}
+
+.item-details__pricing > div {
+    flex: 1;
+}
+
+.item-details__image input[type="file"] {
+    margin-top: 15px;
+}
