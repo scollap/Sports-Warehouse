@@ -9,11 +9,6 @@
 
     <div class="mainRegDiv">
         <h1 class="orange-bar">Staff Dashboard</h1>
-        
-        <div class="checkoutDiv mb-30 width-full">
-            <h2>Welcome, {{ Auth::user()->name }}! 👋</h2>
-            <p>Select an option below to manage the Sports Warehouse store.</p>
-        </div>
 
         <div class="dashboard-grid">
 
@@ -36,18 +31,6 @@
                 <h3 class="dashboard-card__title">My Profile</h3>
                 <p class="dashboard-card__text">Update your personal details or change your password.</p>
                 <a href="{{ route('profile.edit') }}" class="buttonBlue">Edit Profile</a>
-            </div>
-
-            <div class="dashboard-card">
-                <div class="dashboard-card__icon">🚪</div>
-                <h3 class="dashboard-card__title">Logout</h3>
-                <p class="dashboard-card__text">Safely end your session and log out of the system.</p>
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="button-logout">
-                        Log Out
-                    </button>
-                </form>
             </div>
 
         </div>
