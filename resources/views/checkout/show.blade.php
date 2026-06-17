@@ -16,15 +16,26 @@
             <h2>Checkout</h2>
             <p>
                 Complete your details below to finalise your order.
-                You currently have {{ $items->count() }} item(s) in your cart.
+                You currently have {{ count($items_with_qty) }} unique item(s) in your cart.
                 {{-- display a list of items in the cart --}}
                 <div class="cart-summary">
                     <ul>
                         <p class="text-lg border-b border-[#00aced] pb-2">Cart summary:</p>
-                        @foreach ($items as $item)
-                            <li><p class="text-sm"> 🏀 {{ $item->itemName }} - ${{ number_format($item->price, 2) }}</p></li>
+                        @php $total = 0; @endphp
+                        @foreach ($items_with_qty as $data)
+                            @php 
+                                $itemTotal = $data['item']->price * $data['qty'];
+                                $total += $itemTotal;
+                            @endphp
+                            <li>
+                                <p class="text-sm"> 
+                                    🏀 {{ $data['item']->itemName }} 
+                                    (x{{ $data['qty'] }}) - 
+                                    ${{ number_format($itemTotal, 2) }}
+                                </p>
+                            </li>
                         @endforeach
-                        <p class="text-lg border-t border-[#00aced]  pb-2">Total Price: ${{ number_format($items->sum('price'), 2) }}</p>
+                        <p class="text-lg border-t border-[#00aced]  pb-2">Total Price: ${{ number_format($total, 2) }}</p>
                     </ul>
                 </div>
             </p>
@@ -125,26 +136,69 @@
                             </span>
                         @enderror
                     </div>
-{{--  --}}
-                    <div class="form-row">
-                        <label for="customer_address">Your Address*</label>
 
+                    <div class="form-row">
+                        <label for="address_street">Street Address*</label>
                         <input
                             class="form-input"
                             type="text"
-                            id="customer_address"
-                            name="customer_address"
-                            value="{{ old('customer_address') }}"
+                            id="address_street"
+                            name="address_street"
+                            value="{{ old('address_street') }}"
                             required
                         >
-
-                        @error('customer_address')
-                            <span class="error-message">
-                                {{ $message }}
-                            </span>
+                        @error('address_street')
+                            <span class="error-message">{{ $message }}</span>
                         @enderror
                     </div>
-{{--  --}}
+
+                    <div class="form-row">
+                        <label for="address_suburb">Suburb*</label>
+                        <input
+                            class="form-input"
+                            type="text"
+                            id="address_suburb"
+                            name="address_suburb"
+                            value="{{ old('address_suburb') }}"
+                            required
+                        >
+                        @error('address_suburb')
+                            <span class="error-message">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="form-row w-1/2">
+                            <label for="address_state">State*</label>
+                            <input
+                                class="form-input"
+                                type="text"
+                                id="address_state"
+                                name="address_state"
+                                value="{{ old('address_state') }}"
+                                required
+                            >
+                            @error('address_state')
+                                <span class="error-message">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-row w-1/2">
+                            <label for="address_postcode">Postcode*</label>
+                            <input
+                                class="form-input"
+                                type="text"
+                                id="address_postcode"
+                                name="address_postcode"
+                                value="{{ old('address_postcode') }}"
+                                required
+                            >
+                            @error('address_postcode')
+                                <span class="error-message">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+
                     <div class="form-row">
                         <label for="customer_comment">Your Comment</label>
 

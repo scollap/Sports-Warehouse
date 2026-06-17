@@ -119,33 +119,54 @@ class EventController extends Controller
     // CART FUNCTIONS
     public function showCart()
     {
-        $savedItems = Session::get('saved_items', []);
-        $items = Item::whereIn('itemId', $savedItems)->get();
+        // Get cart items from session (itemId => quantity)
+        $cart = Session::get('saved_items', []);
+        $itemIds = array_keys($cart);
+        $items = Item::whereIn('itemId', $itemIds)->get();
+
+        // Prepare data with quantities for the view
+        $items_with_qty = [];
+        foreach ($items as $item) {
+            $items_with_qty[] = [
+                'item' => $item,
+                'qty' => $cart[$item->itemId]
+            ];
+        }
 
         return view('cart.index', [
-            'items' => $items,
+            'items_with_qty' => $items_with_qty,
             'categories' => $this->getCategories(),
         ]);
     }
 
-    public function addToCart(int $id)
+    public function addToCart(Request $request, int $id)
     {
         $item = Item::findOrFail($id);
-        $savedItems = Session::get('saved_items', []);
+        $cart = Session::get('saved_items', []);
 
-        if (!in_array($id, $savedItems)) {
-            $savedItems[] = $id;
+        // Get the quantity from the form, default to 1 if not there
+        $quantity = $request->input('quantity', 1);
+
+        // If item already in cart, add the new quantity to the old one
+        if (isset($cart[$id])) {
+            $cart[$id] += $quantity;
+        } else {
+            // Otherwise just set it to the quantity picked
+            $cart[$id] = $quantity;
         }
 
-        Session::put('saved_items', $savedItems);
+        Session::put('saved_items', $cart);
         return redirect()->route('cart.index')->with('message', 'Item added to cart!');
     }
 
     public function removeFromCart($id)
     {
-        $savedItems = Session::get('saved_items', []);
-        $savedItems = array_diff($savedItems, [$id]);
-        Session::put('saved_items', $savedItems);
+        $cart = Session::get('saved_items', []);
+        // Remove the item entirely from the cart
+        if (isset($cart[$id])) {
+            unset($cart[$id]);
+        }
+        Session::put('saved_items', $cart);
 
         return redirect()->back()->with('message', 'Item removed from cart!');
     }
@@ -153,46 +174,71 @@ class EventController extends Controller
     // CHECKOUT FUNCTIONS
     public function showCheckout()
     {
-        $savedItemsIds = Session::get('saved_items', []);
-        $items = Item::whereIn('itemId', $savedItemsIds)->get();
+        $cart = Session::get('saved_items', []);
+        $itemIds = array_keys($cart);
+        $items = Item::whereIn('itemId', $itemIds)->get();
+
+        $items_with_qty = [];
+        foreach ($items as $item) {
+            $items_with_qty[] = [
+                'item' => $item,
+                'qty' => $cart[$item->itemId]
+            ];
+        }
         
         return view('checkout.show', [
-            'items' => $items,
+            'items_with_qty' => $items_with_qty,
             'categories' => $this->getCategories(),
         ]);
     }
 
     public function processCheckout(Request $request)
     {
-        // Validation for the form fields
+        // Validation for the form fields including the new address parts
         $validatedData = $request->validate([
             'customer_firstname' => 'required|string|min:3',
             'customer_lastname' => 'required|string|min:3',
             'customer_phone' => 'required|string|min:8',
             'customer_email' => 'required|email',
-            'customer_address' => 'required|string|min:5',
+            'address_street' => 'required|string|min:5',
+            'address_suburb' => 'required|string|min:2',
+            'address_state' => 'required|string|min:2',
+            'address_postcode' => 'required|string|min:4',
             'customer_comment' => 'nullable',
             'card_name' => 'required|string|min:3',
             'card_number' => 'required|string|size:16',
             'card_expiry' => 'required|string|regex:/^[0-9]{2}\/[0-9]{2}$/',
         ]);
 
-        $savedItems = Session::get('saved_items', []);
-        if (empty($savedItems)) {
+        $cart = Session::get('saved_items', []);
+        if (empty($cart)) {
             return redirect('/')->with('error', 'Your cart is empty');
         }
         
+        // Combine address fields into one string for the database
+        $fullAddress = $validatedData['address_street'] . ', ' . 
+                       $validatedData['address_suburb'] . ', ' . 
+                       $validatedData['address_state'] . ' ' . 
+                       $validatedData['address_postcode'];
+
         $totalPrice = 0;
-        foreach ($savedItems as $itemId) {
+        $orderItemsData = [];
+        foreach ($cart as $itemId => $qty) {
             $item = Item::find($itemId);
             if ($item) {
-                $totalPrice += $item->price;
+                $itemTotal = $item->price * $qty;
+                $totalPrice += $itemTotal;
+                $orderItemsData[] = [
+                    'item_id' => $itemId,
+                    'quantity' => $qty,
+                    'price' => $item->price,
+                ];
             }
-        };
+        }
+        
         // Mask card number before saving
-$cardNumber = preg_replace('/\D/', '', $validatedData['card_number']);
-
-$maskedCardNumber = '************' . substr($cardNumber, -4);
+        $cardNumber = preg_replace('/\D/', '', $validatedData['card_number']);
+        $maskedCardNumber = '************' . substr($cardNumber, -4);
 
         // Create the order in the database
         $order = Order::create([
@@ -200,7 +246,7 @@ $maskedCardNumber = '************' . substr($cardNumber, -4);
             'customer_lastname' => $validatedData['customer_lastname'],
             'customer_phone' => $validatedData['customer_phone'],
             'customer_email' => $validatedData['customer_email'],
-            'address' => $validatedData['customer_address'],
+            'address' => $fullAddress, // Use the combined address
             'comments' => $validatedData['customer_comment'],
             'total_price' => $totalPrice,
             'card_name' => $validatedData['card_name'],
@@ -208,21 +254,24 @@ $maskedCardNumber = '************' . substr($cardNumber, -4);
             'card_expiry' => $validatedData['card_expiry'],
         ]);
         
-        // Save the items for this order
-        foreach ($savedItems as $itemId) {
-            $item = Item::find($itemId);
-            if ($item) {
-                $order->orderItems()->create([
-                    'item_id' => $itemId,
-                    'quantity' => 1,
-                    'price' => $item->price,
-                ]);
-            }
+        // Save the items for this order with their quantities
+        foreach ($orderItemsData as $itemData) {
+            $order->orderItems()->create($itemData);
         }
 
         Session::forget('saved_items');
 
-        return redirect('/')->with('success', 'Checkout successful! Your order number is: #' . $order->id);
+        // Redirect to a specific confirmation page
+        return redirect()->route('checkout.confirmation', ['id' => $order->id]);
+    }
+
+    public function orderConfirmation($id)
+    {
+        $order = Order::findOrFail($id);
+        return view('checkout.confirmation', [
+            'order' => $order,
+            'categories' => $this->getCategories()
+        ]);
     }
 }
 

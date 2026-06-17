@@ -70,6 +70,6 @@ class Item extends Model
     public function getIsSavedAttribute()
     {
         $savedItems = Session::get('saved_items', []);
-        return in_array($this->itemId, $savedItems);
+        return isset($savedItems[$this->itemId]);
     }
 }

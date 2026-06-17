@@ -52,15 +52,33 @@
                 <a href="{{ url()->previous() }}" class="button button-secondary">Back</a>
 
                 @if ($item->isSaved)
-                    <form action="{{ route('cart.remove', $item->itemId) }}" method="POST">
-                        @csrf
-                        <button type="submit" class="button button-primary cursor-pointer">
-                            Remove from Cart
-                        </button>
-                    </form>
+                    <div class="flex flex-col gap-2">
+                        <form action="{{ route('cart.remove', $item->itemId) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="button button-primary cursor-pointer" style="background-color: #666;">
+                                Remove from Cart
+                            </button>
+                        </form>
+                        
+                        {{-- Even if saved, maybe they want to add more? --}}
+                        <form action="{{ route('cart.add', $item->itemId) }}" method="POST" class="mt-4">
+                            @csrf
+                            <div style="margin-bottom: 10px;">
+                                <label for="quantity">Add more quantity:</label>
+                                <input type="number" name="quantity" id="quantity" value="1" min="1" class="form-input" style="width: 80px; display: inline-block;">
+                            </div>
+                            <button type="submit" class="button button-primary cursor-pointer">
+                                Add to Cart
+                            </button>
+                        </form>
+                    </div>
                 @else
                     <form action="{{ route('cart.add', $item->itemId) }}" method="POST">
                         @csrf
+                        <div style="margin-bottom: 10px;">
+                            <label for="quantity">Quantity:</label>
+                            <input type="number" name="quantity" id="quantity" value="1" min="1" class="form-input" style="width: 80px; display: inline-block;">
+                        </div>
                         <button type="submit" class="button button-primary cursor-pointer">
                             Add to Cart
                         </button>

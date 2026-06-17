@@ -37,7 +37,7 @@
                         @else
                             <li class="nav-item login-item"><a class="nav-link" href="{{ route('login') }}"><i class="fas fa-lock"></i> Login</a></li>
                             <li class="cart-item"><a class="nav-link" href="{{ route('cart.index') }}"><i class="fas fa-shopping-cart"></i> View Cart</a></li>
-                            <li class="items-count"><span onclick="window.location='{{ route('cart.index') }}'" role="link" style="cursor: pointer;">{{ count(session('saved_items', [])) }} Items</span></li>
+                            <li class="items-count"><span onclick="window.location='{{ route('cart.index') }}'" role="link" style="cursor: pointer;">{{ array_sum(session('saved_items', [])) }} Items</span></li>
                         @endauth
                     </ul>
                 </nav>

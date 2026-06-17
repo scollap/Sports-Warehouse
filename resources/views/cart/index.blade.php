@@ -12,7 +12,7 @@
 
     <div class="formDiv">
 
-        @if($items->isEmpty())
+        @if(empty($items_with_qty))
 
             <div class="empty-cart">
                 <h3>Your cart is empty</h3>
@@ -23,13 +23,25 @@
 
             <div class="cart-summary">
                 <h3>Order Summary</h3>
-                <p>Total Items: {{ $items->count() }}</p>
+                @php 
+                    $totalItems = 0;
+                    $totalPrice = 0;
+                    foreach($items_with_qty as $data) {
+                        $totalItems += $data['qty'];
+                        $totalPrice += ($data['item']->price * $data['qty']);
+                    }
+                @endphp
+                <p>Total Items in cart: {{ $totalItems }}</p>
+                <p>Total Order Price: ${{ number_format($totalPrice, 2) }}</p>
             </div>
 
             <div class="cart-grid">
 
-                @foreach($items as $item)
-
+                @foreach($items_with_qty as $data)
+                    @php 
+                        $item = $data['item'];
+                        $qty = $data['qty'];
+                    @endphp
                     <div class="cart-card">
 
                         <a href="{{ route('product.show', $item->itemId) }}">
@@ -44,8 +56,15 @@
                         </a>
 
                         <p class="price orange">
-                            $
-                            {{ number_format($item->salePrice ?? $item->price, 2) }}
+                            Price: ${{ number_format($item->price, 2) }} 
+                        </p>
+                        
+                        <p style="margin: 10px 0;">
+                            <strong>Quantity: {{ $qty }}</strong>
+                        </p>
+
+                        <p>
+                            Sub-total: ${{ number_format($item->price * $qty, 2) }}
                         </p>
 
                         <form action="{{ route('cart.remove', $item->itemId) }}" method="POST">
