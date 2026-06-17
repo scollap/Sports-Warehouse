@@ -47,9 +47,7 @@ Route::get('/checkout', [EventController::class, 'showCheckout'])->name('items.c
 Route::post('/checkout', [EventController::class, 'processCheckout'])->name('items.checkout');
 Route::get('/checkout/confirmation/{id}', [EventController::class, 'orderConfirmation'])->name('checkout.confirmation');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [EventController::class, 'showDashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

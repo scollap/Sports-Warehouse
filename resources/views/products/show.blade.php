@@ -55,7 +55,7 @@
                     <div class="flex flex-col gap-2">
                         <form action="{{ route('cart.remove', $item->itemId) }}" method="POST">
                             @csrf
-                            <button type="submit" class="button button-primary cursor-pointer" style="background-color: #666;">
+                            <button type="submit" class="button button-primary cursor-pointer button-muted">
                                 Remove from Cart
                             </button>
                         </form>
@@ -65,7 +65,7 @@
                             @csrf
                             <div style="margin-bottom: 10px;">
                                 <label for="quantity">Add more quantity:</label>
-                                <input type="number" name="quantity" id="quantity" value="1" min="1" class="form-input" style="width: 80px; display: inline-block;">
+                                <input type="number" name="quantity" id="quantity" value="1" min="1" class="form-input quantity-input">
                             </div>
                             <button type="submit" class="button button-primary cursor-pointer">
                                 Add to Cart
@@ -77,7 +77,7 @@
                         @csrf
                         <div style="margin-bottom: 10px;">
                             <label for="quantity">Quantity:</label>
-                            <input type="number" name="quantity" id="quantity" value="1" min="1" class="form-input" style="width: 80px; display: inline-block;">
+                            <input type="number" name="quantity" id="quantity" value="1" min="1" class="form-input quantity-input">
                         </div>
                         <button type="submit" class="button button-primary cursor-pointer">
                             Add to Cart

@@ -273,6 +273,13 @@ class EventController extends Controller
             'categories' => $this->getCategories()
         ]);
     }
+
+    public function showDashboard()
+    {
+        // Get categories manually for the sidebar
+        $categories = $this->getCategories();
+        return view('dashboard', compact('categories'));
+    }
 }
 
 //Just handy things to rememeber when doing dev work

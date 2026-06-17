@@ -1,17 +1,56 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
-                </div>
+@section('title', 'Admin Dashboard - Sports Warehouse')
+
+@section('content')
+
+    @include('partials._Logo_search')
+    @include('partials._categories')
+
+    <div class="mainRegDiv">
+        <h1 class="orange-bar">Staff Dashboard</h1>
+        
+        <div class="checkoutDiv mb-30 width-full">
+            <h2>Welcome, {{ Auth::user()->name }}! 👋</h2>
+            <p>Select an option below to manage the Sports Warehouse store.</p>
+        </div>
+
+        <div class="dashboard-grid">
+
+            <div class="dashboard-card">
+                <div class="dashboard-card__icon">👟</div>
+                <h3 class="dashboard-card__title">Products</h3>
+                <p class="dashboard-card__text">Add, update, or remove items from the store.</p>
+                <a href="{{ route('admin.items.index') }}" class="buttonBlue">Manage Products</a>
             </div>
+
+            <div class="dashboard-card">
+                <div class="dashboard-card__icon">📁</div>
+                <h3 class="dashboard-card__title">Categories</h3>
+                <p class="dashboard-card__text">Organize your products into different categories.</p>
+                <a href="{{ route('admin.categories.index') }}" class="buttonBlue">Manage Categories</a>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="dashboard-card__icon">👤</div>
+                <h3 class="dashboard-card__title">My Profile</h3>
+                <p class="dashboard-card__text">Update your personal details or change your password.</p>
+                <a href="{{ route('profile.edit') }}" class="buttonBlue">Edit Profile</a>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="dashboard-card__icon">🚪</div>
+                <h3 class="dashboard-card__title">Logout</h3>
+                <p class="dashboard-card__text">Safely end your session and log out of the system.</p>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="button-logout">
+                        Log Out
+                    </button>
+                </form>
+            </div>
+
         </div>
     </div>
-</x-app-layout>
+
+@endsection
