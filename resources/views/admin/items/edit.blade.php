@@ -24,8 +24,9 @@
 
         <div class="item-details__image">
 
-            <img src="{{ asset('images/product/' . $item->photo) }}"
-                 alt="{{ $item->itemName }}">
+            <img id="imagePreview"
+                    src="{{ asset('images/product/' . $item->photo) }}"
+                    alt="{{ $item->itemName }}">
 
             <label for="photo">
                 Upload New Image
@@ -151,3 +152,18 @@
 </form>
 
 @endsection
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const photoInput = document.getElementById('photo');
+        const preview = document.getElementById('imagePreview');
+
+        photoInput.addEventListener('change', function () {
+            const file = this.files[0];
+
+            if (file) {
+                preview.src = URL.createObjectURL(file);
+            }
+        });
+    });
+</script>

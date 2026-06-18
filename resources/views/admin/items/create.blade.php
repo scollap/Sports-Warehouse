@@ -166,16 +166,16 @@
 @endsection
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const photoInput = document.getElementById('photo');
-    const preview = document.getElementById('imagePreview');
+    document.addEventListener('DOMContentLoaded', function () {
+        const photoInput = document.getElementById('photo');
+        const preview = document.getElementById('imagePreview');
 
-    photoInput.addEventListener('change', function () {
-        const file = this.files[0];
+        photoInput.addEventListener('change', function () {
+            const file = this.files[0];
 
-        if (file) {
-            preview.src = URL.createObjectURL(file);
-        }
+            if (file) {
+                preview.src = URL.createObjectURL(file);
+            }
+        });
     });
-});
 </script>

@@ -35,6 +35,9 @@
                     <tr>
                         <th>ID</th>
                         <th>Product Name</th>
+                        <th>Price</th>
+                        <th>Sale Price</th>
+                        <th>Featured</th>
                         <th class="actions-column">Actions</th>
                     </tr>
                 </thead>
@@ -50,11 +53,15 @@
                                     class="product-thumb">
                             </td>
                             <td>{{ $item->itemName }}</td>
-
+                            <td>${{ number_format($item->price, 2) }}</td>
+                            <td>
+                                {{ $item->salePrice ? '$' . number_format($item->salePrice, 2) : '-' }}
+                            </td>
+                            <td>{{ $item->featured? 'Yes' : '-' }}</td>
                             <td class="actions-cell">
                                 <a href="{{ route('admin.items.edit', $item->itemId) }}"
                                    class="buttonBlue">
-                                    Edit
+                                    <i class="fa-solid fa-sliders"></i>
                                 </a>
 
                                 <form action="{{ route('admin.items.destroy', $item->itemId) }}"
@@ -65,7 +72,7 @@
                                     <button type="submit"
                                             class="button"
                                             onclick="return confirm('Are you sure you want to delete this product?')">
-                                        Delete
+                                        <i class="fa-solid fa-trash-can"></i>
                                     </button>
                                 </form>
                             </td>

@@ -46,7 +46,7 @@
                             <td class="actions-cell">
                                 <a href="{{ route('admin.categories.edit', $category->categoryId) }}"
                                    class="buttonBlue">
-                                    Edit
+                                    <i class="fa-solid fa-sliders"></i>
                                 </a>
 
                                 <form action="{{ route('admin.categories.destroy', $category->categoryId) }}"
@@ -57,7 +57,7 @@
                                     <button type="submit"
                                             class="button"
                                             onclick="return confirm('Are you sure you want to delete this category?')">
-                                        Delete
+                                        <i class="fa-solid fa-trash-can"></i>
                                     </button>
                                 </form>
                             </td>
