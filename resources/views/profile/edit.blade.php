@@ -3,6 +3,14 @@
 
         <h1 class="orange-bar">My Profile</h1>
 
+    <div class="mb-4">
+        <div class="flex justify-end">
+
+            <a href="{{ route('dashboard') }}" class="buttonBlue">
+                Back to Dashboard
+            </a>
+        </div>
+    </div>
         <div class="flex flex-col lg:flex-row gap-6">
             <div class="formDiv">
                 @include('profile.partials.update-profile-information-form')

@@ -9,9 +9,13 @@
 
     @include('partials._flash-messages')
 
-    <div class="mb-4">
+    <div class="flex justify-between mt-4">
         <a href="{{ route('admin.categories.create') }}" class="buttonBlue">
             Add Category
+        </a>
+
+        <a href="{{ route('dashboard') }}" class="buttonBlue">
+            Back to Dashboard
         </a>
     </div>
 
