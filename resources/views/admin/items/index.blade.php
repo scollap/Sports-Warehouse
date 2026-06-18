@@ -36,7 +36,7 @@
                         <th>ID</th>
                         <th>Product Name</th>
                         <th>Price</th>
-                        <th>Sale Price</th>
+                        <th>Sale</th>
                         <th>Featured</th>
                         <th class="actions-column">Actions</th>
                     </tr>
@@ -45,20 +45,29 @@
                 <tbody>
                     @foreach ($items as $item)
                         <tr>
-                            <td class="product-cell">
+                            <td>
+                                <div class="product-cell">
                                 {{ $item->itemId }}
                                 <img
                                     src="{{ $item->photo ? asset('images/product/' . $item->photo) : asset('images/placeholder.png') }}"
                                     alt="{{ $item->itemName }}"
                                     class="product-thumb">
+                                </div>
                             </td>
                             <td>{{ $item->itemName }}</td>
-                            <td>${{ number_format($item->price, 2) }}</td>
                             <td>
-                                {{ $item->salePrice ? '$' . number_format($item->salePrice, 2) : '-' }}
+                                @if($item->salePrice)
+                                    <del>${{ number_format($item->price, 2) }}</del>
+                                @else
+                                    ${{ number_format($item->price, 2) }}
+                                @endif
                             </td>
-                            <td>{{ $item->featured? 'Yes' : '-' }}</td>
-                            <td class="actions-cell">
+                            <td>
+                                {{ $item->salePrice ? '$' . number_format($item->salePrice, 2) : '' }}
+                            </td>
+                            <td>{!! $item->featured ? '<i class="fa-regular fa-circle-check"></i>' : '' !!}</td>
+                            <td>
+                                <div class="actions-cell">
                                 <a href="{{ route('admin.items.edit', $item->itemId) }}"
                                    class="buttonBlue">
                                     <i class="fa-solid fa-sliders"></i>
@@ -75,6 +84,7 @@
                                         <i class="fa-solid fa-trash-can"></i>
                                     </button>
                                 </form>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
