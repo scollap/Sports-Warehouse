@@ -28,7 +28,11 @@
                     $totalPrice = 0;
                     foreach($items_with_qty as $data) {
                         $totalItems += $data['qty'];
-                        $totalPrice += ($data['item']->price * $data['qty']);
+                        if($data['item']->sale_price) {
+                            $totalPrice += ($data['item']->sale_price * $data['qty']);
+                        } else {
+                            $totalPrice += ($data['item']->price * $data['qty']);
+                        }
                     }
                 @endphp
                 <p>Total Items in cart: {{ $totalItems }}</p>
