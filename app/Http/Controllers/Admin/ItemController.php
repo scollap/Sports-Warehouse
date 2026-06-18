@@ -43,6 +43,7 @@ public function store(Request $request)
         'salePrice' => 'nullable|numeric|min:0',
         'description' => 'nullable|string|max:2000',
         'categoryId' => 'required|exists:category,categoryId',
+        'featured' => 'boolean',
         'photo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
     ]);
 
