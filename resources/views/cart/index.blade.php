@@ -28,8 +28,8 @@
                     $totalPrice = 0;
                     foreach($items_with_qty as $data) {
                         $totalItems += $data['qty'];
-                        if($data['item']->sale_price) {
-                            $totalPrice += ($data['item']->sale_price * $data['qty']);
+                        if($data['item']->salePrice) {
+                            $totalPrice += ($data['item']->salePrice * $data['qty']);
                         } else {
                             $totalPrice += ($data['item']->price * $data['qty']);
                         }
@@ -60,7 +60,7 @@
                         </a>
 
                         <p class="price orange">
-                            Price: ${{ number_format($item->price, 2) }} 
+                            {!! $data['item']->salePrice ? '$' . number_format($data['item']->salePrice, 2) : '$' . number_format($data['item']->price, 2)  !!}
                         </p>
                         
                         <p style="margin: 10px 0;">
@@ -68,7 +68,7 @@
                         </p>
 
                         <p>
-                            Sub-total: ${{ number_format($item->price * $qty, 2) }}
+                            Sub-total: {!! $data['item']->salePrice ? '$' . number_format($data['item']->salePrice * $qty, 2) : '$' . number_format($data['item']->price * $qty, 2)  !!}
                         </p>
 
                         <form action="{{ route('cart.remove', $item->itemId) }}" method="POST">

@@ -21,10 +21,12 @@
                 <div class="cart-summary">
                     <ul>
                         <p class="text-lg border-b border-[#00aced] pb-2">Cart summary:</p>
-                        @php $total = 0; @endphp
+                        @php 
+                            $total = 0;
+                        @endphp
                         @foreach ($items_with_qty as $data)
                             @php 
-                                $itemTotal = $data['item']->price * $data['qty'];
+                                $itemTotal = ($data['item']->salePrice ?? $data['item']->salePrice) * $data['qty'] | ($data['item']->salePrice ?? $data['item']->price) * $data['qty'];
                                 $total += $itemTotal;
                             @endphp
                             <li>
@@ -282,10 +284,9 @@
             form.addEventListener('submit', function(e) {
                 let isValid = true;
 
-                // Reset errors
+
                 document.querySelectorAll('.error-message').forEach(el => el.classList.add('hidden'));
 
-                // Simple Client-side validation
                 const cardName = document.getElementById('card_name');
                 const cardNumber = document.getElementById('card_number');
                 const cardExpiry = document.getElementById('card_expiry');

@@ -196,17 +196,17 @@ class EventController extends Controller
     {
         // Validation for the form fields including the new address parts
         $validatedData = $request->validate([
-            'customer_firstname' => 'required|string|min:3',
-            'customer_lastname' => 'required|string|min:3',
-            'customer_phone' => 'required|string|min:8',
-            'customer_email' => 'required|email',
-            'address_street' => 'required|string|min:5',
-            'address_suburb' => 'required|string|min:2',
-            'address_state' => 'required|string|min:2',
-            'address_postcode' => 'required|string|min:4',
+            'customer_firstname' => 'required|string|min:3|max:100',
+            'customer_lastname' => 'required|string|min:3|max:100',
+            'customer_phone' => 'required|string|min:8|max:20',
+            'customer_email' => 'required|email|max:255',
+            'address_street' => 'required|string|min:5|max:255',
+            'address_suburb' => 'required|string|min:2|max:100',
+            'address_state' => 'required|string|min:2|max:100',
+            'address_postcode' => 'required|string|min:4|max:10',
             'customer_comment' => 'nullable',
-            'card_name' => 'required|string|min:3',
-            'card_number' => 'required|string|size:16',
+            'card_name' => 'required|string|min:3|max:17',
+            'card_number' => 'required|string|digitsbetween:12,19',
             'card_expiry' => 'required|string|regex:/^[0-9]{2}\/[0-9]{2}$/',
         ]);
 
