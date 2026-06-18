@@ -8,17 +8,18 @@
     <h1 class="orange-bar">Manage Products</h1>
 
     @include('partials._flash-messages')
+    <div class="mb-4">
+        <div class="flex justify-between mt-4">
 
-    <div class="flex justify-between mt-4">
+                <a href="{{ route('admin.items.create') }}" class="buttonBlue">
+                    Add Product
+                </a>
 
-            <a href="{{ route('admin.items.create') }}" class="buttonBlue">
-                Add Product
-            </a>
+                <a href="{{ route('dashboard') }}" class="buttonBlue">
+                    Back to Dashboard
+                </a>
 
-            <a href="{{ route('dashboard') }}" class="buttonBlue">
-                Back to Dashboard
-            </a>
-
+        </div>
     </div>
 
     <div class="formDiv">

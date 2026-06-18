@@ -8,15 +8,16 @@
     <h1 class="orange-bar">Manage Categories</h1>
 
     @include('partials._flash-messages')
+    <div class="mb-4">
+        <div class="flex justify-between mt-4">
+            <a href="{{ route('admin.categories.create') }}" class="buttonBlue">
+                Add Category
+            </a>
 
-    <div class="flex justify-between mt-4">
-        <a href="{{ route('admin.categories.create') }}" class="buttonBlue">
-            Add Category
-        </a>
-
-        <a href="{{ route('dashboard') }}" class="buttonBlue">
-            Back to Dashboard
-        </a>
+            <a href="{{ route('dashboard') }}" class="buttonBlue">
+                Back to Dashboard
+            </a>
+        </div>
     </div>
 
     <div class="formDiv">
