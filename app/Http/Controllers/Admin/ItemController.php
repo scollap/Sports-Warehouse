@@ -50,7 +50,7 @@ public function store(Request $request)
     // Check if there is an image to upload
     if ($request->hasFile('photo')) {
         $file = $request->file('photo');
-        $filename = time() . '_' . $file->getClientOriginalName();
+        $filename = $file->getClientOriginalName();
         $file->move(
             public_path('images/product'),
             $filename
@@ -101,7 +101,7 @@ public function store(Request $request)
 
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
-            $filename = time() . '_' . $file->getClientOriginalName();
+            $filename = $file->getClientOriginalName();
             $file->move(
                 public_path('images/product'),
                 $filename

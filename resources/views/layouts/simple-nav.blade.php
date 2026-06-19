@@ -4,6 +4,9 @@
     </button>
 
     <div id="userDropdown" class="user-dropdown">
+        <a href="{{ route('dashboard') }}">
+            <i class="fas fa-cogs"></i> Dashboard
+        </a>
         <a href="{{ route('profile.edit') }}">
             <i class="fas fa-user"></i> Profile
         </a>
